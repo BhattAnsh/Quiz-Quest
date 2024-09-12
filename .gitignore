@@ -9,6 +9,8 @@ lerna-debug.log*
 
 /QuizQuestFrontend/node_modules
 /QuizQuestBackend/node_modules
+/QuizQuestFrontend/.env
+/QuizQuestBackend/.env
 dist
 dist-ssr
 *.local

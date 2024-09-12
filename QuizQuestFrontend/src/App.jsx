@@ -1,14 +1,16 @@
-
-import './App.css'
-import { Calendar } from './components/ui/calendar'
-
+import "./App.css";
+import Home from "./pages/home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
-
   return (
     <>
-      <Calendar></Calendar>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
