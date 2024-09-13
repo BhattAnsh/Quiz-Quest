@@ -1,7 +1,10 @@
 import mongoose, { mongo } from "mongoose";
 
 const codeSchmea =  new mongoose.Schema({
-
+  code:{
+    type:String,
+    required:true,
+  }
 })
 const questionSchema = new mongoose.Schema({
   question: {
