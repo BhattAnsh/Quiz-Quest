@@ -1,13 +1,16 @@
 import mongoose, { mongo } from "mongoose";
 
+const codeSchmea =  new mongoose.Schema({
+
+})
 const questionSchema = new mongoose.Schema({
-  questionText: {
+  question: {
     type: String,
     required: true,
   },
   options: {
     type: Map,
-    of:String,
+    of: String,
     required: true,
   },
   correctOption: {
@@ -26,21 +29,22 @@ const quizSchema = mongoose.Schema({
     required: true,
   },
   liveUntil: {
-    type: Date,
+    type: String,
     required: true,
   },
   createdOn: {
     type: Date,
     default: Date.now,
   },
-  questions: {
-    type: [questionSchema],
-    default:[],
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
+  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question", default:[] }],
+  createdBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required:true}],
+  quizCode:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Code",
+    required:true
+  }]
 });
 
 export const Quiz = mongoose.model("Quiz", quizSchema);
+export const Question = mongoose.model("Question", questionSchema);
+export const Code = mongoose.model("Code", codeSchmea);
