@@ -7,6 +7,27 @@ const codeCreation =() =>{
     return code;
 }
 
+//deletion of related details of quiz
+export const delQuestion = async (id) =>{
+    try{
+        let quiz = await Quiz.findById(id).select("questions");
+        quiz.questions.forEach(async (qId) => {
+            await Question.findByIdAndDelete(qId);
+        });
+    }catch(err){
+        console.log(err)
+    }
+}
+//deletion for quiz related code
+export const delCode = async (id) =>{
+    try{
+        let quiz = await Quiz.findById(id).select("quizCode");
+        await Code.findByIdAndDelete(quiz.quizCode);
+    }catch(err){
+        console.log(err)
+    }
+}
+
 //create quiz
 export const createQuiz = async (req, res) =>{
     //createdBy will be the user id which will stored in the localstorage of the user.
@@ -62,6 +83,8 @@ export const editQuiz = async (req, res) =>{
 export const deleteQuiz = async (req, res) =>{
     let quizId = req.query.id;
     try{
+        await delQuestion(quizId);
+        await delCode(quizId);
         const deletedQuiz = await Quiz.findByIdAndDelete(quizId)
 
         if (deletedQuiz){
@@ -89,41 +112,45 @@ export const deleteQuiz = async (req, res) =>{
 export const addQuestion = async (req, res) => {
     // getting the data from the form
     let { question, options, correctOption } = req.body;
-    let quizId = req.query.id;
+    let quizId = req.query.id; // id coming from query parameters
 
     try {
-        //adding new question in question schema
+        // Adding new question in the Question schema
         let newQuestion = new Question({
             question, options, correctOption
         });
         const q = await newQuestion.save();
 
-        // Fetch the quiz so we can add the question id's to link it with the quiz
-        const quiz = await Quiz.findById(quizId); //id will come from the form data
+        // Fetch the quiz to link the question to it
+        const quiz = await Quiz.findById(quizId); // id coming from query params
 
-        // Check if quiz.questions exists, if not initialize it as an empty array
-        //this step is taken because we have to add multiple question in the quiz
+        if (!quiz) {
+            return res.status(404).json({
+                message: "Quiz doesn't exist",
+            });
+        }
+
+        // Check if quiz.questions exists, if not, initialize it as an empty array
         if (!quiz.questions) {
             quiz.questions = [];
         }
 
-        // Add the question to the quiz
+        // Add the new question's ID to the quiz
         quiz.questions.push(q._id);
         await quiz.save();
 
         res.status(200).json({
-            message: "Added question to quiz"
+            message: "Added question to quiz",
+            questionId: q._id,
         });
-        return;
-
     } catch (err) {
         console.log(err);
-        res.status(400).json({
-            message: "Internal server Error"
+        res.status(500).json({
+            message: "Internal server error",
         });
-        return;
     }
 };
+
 //editQuestion
 export const editQuestion = async (req, res) =>{
     let {question, options, correctOption} = req.body;
@@ -133,7 +160,7 @@ export const editQuestion = async (req, res) =>{
         if (updatedQuestion){
             res.status(200).json({
                 message:"Question is updated",
-                updatedQuiz
+                updatedQuestion
             })
         }
         else{
@@ -141,11 +168,12 @@ export const editQuestion = async (req, res) =>{
                 message:"Question not found"
             })
         }
-    }catch(error){
+    }catch(err){
         res.status(400).json({
             message:"internal Server Error",
-            error:error,
+            error:err,
         })
+        console.log(err)
     }
 }
 //deleteQuestion
