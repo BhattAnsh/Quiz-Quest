@@ -81,7 +81,7 @@ export const editQuiz = async (req, res) =>{
 }
 //delete Quiz
 export const deleteQuiz = async (req, res) =>{
-    let quizId = req.query.q_id;
+    let quizId = req.query.quiz_id;
     try{
         await delQuestion(quizId);
         await delCode(quizId);
@@ -109,10 +109,10 @@ export const deleteQuiz = async (req, res) =>{
 
 
 //addquestion
-export const addQuestion = async (req, res) => {
+export const addQuestion = async (req, res) =>{
     // getting the data from the form
     let { question, options, correctOption } = req.body;
-    let quizId = req.query.q_id; // id coming from query parameters
+    let quizId = req.query.quiz_id; // id coming from query parameters
 
     try {
         // Adding new question in the Question schema
@@ -154,7 +154,7 @@ export const addQuestion = async (req, res) => {
 //editQuestion
 export const editQuestion = async (req, res) =>{
     let {question, options, correctOption} = req.body;
-    let questionId = req.query.q_id;
+    let questionId = req.query.question_id;
     try{
         let updatedQuestion = await Question.findByIdAndUpdate(questionId, {question, options, correctOption}, {new :true});
         if (updatedQuestion){
@@ -178,7 +178,7 @@ export const editQuestion = async (req, res) =>{
 }
 //deleteQuestion
 export const deleteQuestion = async (req, res) =>{
-    let questionId = req.query.q_id;
+    let questionId = req.query.question_id;
     try{
         const deletedQuestion = await Question.findByIdAndDelete(questionId)
 
