@@ -104,11 +104,8 @@ export const deleteQuiz = async (req, res) =>{
         })
     }
 }
-
-
-
-
 //addquestion
+//add quiz id in the query
 export const addQuestion = async (req, res) =>{
     // getting the data from the form
     let { question, options, correctOption } = req.body;
@@ -152,6 +149,7 @@ export const addQuestion = async (req, res) =>{
 };
 
 //editQuestion
+//add question id in the query
 export const editQuestion = async (req, res) =>{
     let {question, options, correctOption} = req.body;
     let questionId = req.query.question_id;
@@ -177,6 +175,7 @@ export const editQuestion = async (req, res) =>{
     }
 }
 //deleteQuestion
+//add question id in the query
 export const deleteQuestion = async (req, res) =>{
     let questionId = req.query.question_id;
     try{

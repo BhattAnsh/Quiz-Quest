@@ -2,8 +2,9 @@ import { Quiz } from "../models/quiz.model.js";
 export const authorization = async(req, res, next) => {
     try{
         let user_id = req.query.id;
-        let quiz_id = req.query.q_id;
+        let quiz_id = req.query.quiz_id;
         let quizOwnerId = await Quiz.findById(quiz_id).select("createdBy");
+        console.log(quizOwnerId);
         if(quizOwnerId.createdBy == user_id){
             next();
         }
