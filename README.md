@@ -46,7 +46,7 @@ QuizQuest is a web-based application designed to create, manage, and take quizze
 
 ## Contributing
 
-Contributions are welcome! Please read the [contributing guidelines](https://github.com/Kishore007raj/Quiz-Quest/blob/main/Contribution.md) for more information.
+Contributions are welcome! Please read the [contributing guidelines](https://github.com/BhattAnsh/Quiz-Quest/blob/main/Contribution.md) for more information.
 
 ## Our Valuable Contributors ❤️✨
 
