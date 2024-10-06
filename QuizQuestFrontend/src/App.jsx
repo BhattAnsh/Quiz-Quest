@@ -1,5 +1,5 @@
 import "./App.css";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FloatingNav from "./components/navbar";
 import { IoMdHome, IoMdAddCircle, IoMdMail } from "react-icons/io";
