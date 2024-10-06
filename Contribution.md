@@ -36,7 +36,7 @@ Please adhere to the [Code of Conduct](Code_Of_Conduct.md) in all your interacti
 
 ## Reporting Issues
 
-If you encounter any issues, please report them using the [issue tracker](https://github.com/BhattAnsh/QuizQuest/issues). Provide as much detail as possible to help us resolve the issue quickly.
+If you encounter any issues, please report them using the [issue tracker](Issue_Template.md). Provide as much detail as possible to help us resolve the issue quickly.
 
 ## Getting Help
 

@@ -57,7 +57,7 @@
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read the [contributing guidelines](https://github.com/BhattAnsh/Quiz-Quest/blob/main/Contribution.md) for more information.
+Contributions are welcome! Please read the [contributing guidelines](Contribution.md) for more information.
 
 ## 🌟 Our Valuable Contributors ❤️✨
 
@@ -65,8 +65,8 @@ Contributions are welcome! Please read the [contributing guidelines](https://git
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/Kishore007raj/Quiz-Quest/blob/main/License.md) file for details.
+This project is licensed under the MIT License. See the [LICENSE](License.md) file for details.
 
 ## 📬 Contact
 
-For any inquiries, please contact [anshbat](mailto:anshbhatt140@gmail.com).
+For any inquiries, please contact [anshbat](https://github.com/BhattAnsh).
