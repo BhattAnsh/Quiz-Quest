@@ -15,6 +15,7 @@ QuizQuest is a web-based application designed to create, manage, and take quizze
 - HTML5
 - CSS3
 - JavaScript (ES6+)
+- Typescript (For backend)
 - React.js
 - Node.js
 - Express.js
@@ -23,29 +24,33 @@ QuizQuest is a web-based application designed to create, manage, and take quizze
 ## Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/BhattAnsh/QuizQuest.git
-    ```
+   ```bash
+   git clone https://github.com/BhattAnsh/QuizQuest.git
+   ```
 2. Navigate to the project directory:
-    ```bash
-    cd QuizQuest
-    ```
+   ```bash
+   cd QuizQuest
+   ```
 3. Install dependencies:
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 ## Usage
 
 1. Start the development server:
-    ```bash
-    npm start
-    ```
+   ```bash
+   npm start
+   ```
 2. Open your browser and go to `http://localhost:3000`
 
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guidelines](https://github.com/Kishore007raj/Quiz-Quest/blob/main/Contribution.md) for more information.
+
+## Our Valuable Contributors ❤️✨
+
+[![Contributors](https://contrib.rocks/image?repo=BhattAnsh/Quiz-Quest)](https://github.com/BhattAnsh/Quiz-Quest/graphs/contributors)
 
 ## License
 
@@ -54,4 +59,3 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 ## Contact
 
 For any inquiries, please contact [anshbat](mailto:anshbhatt140@gmail.com).
-

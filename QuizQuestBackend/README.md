@@ -15,17 +15,17 @@ Welcome to the QuizQuest Backend! This project serves as the backend for the Qui
 To get started with the QuizQuest Backend, follow these steps:
 
 1. **Clone the repository:**
-    ```sh
-    git clone https://github.com/BhattAnsh/QuizQuestBackend.git
-    ```
+   ```sh
+   git clone https://github.com/BhattAnsh/QuizQuestBackend.git
+   ```
 2. **Navigate to the project directory:**
-    ```sh
-    cd QuizQuestBackend
-    ```
+   ```sh
+   cd QuizQuestBackend
+   ```
 3. **Install dependencies:**
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 
 ## Usage
 
@@ -35,17 +35,16 @@ To run the backend server, use the following command:
 npm start
 ```
 
-The server will start on `http://localhost:3000`.
+The server will start on `http://localhost:8000`, you can change it on your .env file.
 
 ## API Endpoints
 
 Here are some of the main API endpoints available:
 
-- `GET /api/quizzes` - Retrieve a list of quizzes
-- `POST /api/quizzes` - Create a new quiz
-- `GET /api/quizzes/:id` - Retrieve a specific quiz by ID
-- `PUT /api/quizzes/:id` - Update a specific quiz by ID
-- `DELETE /api/quizzes/:id` - Delete a specific quiz by ID
+- `POST http://localhost:8000/auth/register` - Register.
+- `POST http://localhost:8000/quiz/create` - Create a new quiz.
+- `POST http://localhost:8000/auth/login` - Login after checking all credentials.
+- `POST http://localhost:8000/user/updateUserInfo` - Updates user info.
 
 ## Contributing
 
