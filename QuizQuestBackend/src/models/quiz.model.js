@@ -1,11 +1,14 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
-const codeSchmea =  new mongoose.Schema({
-  code:{
-    type:String,
-    required:true,
-  }
-})
+// Code Schema
+const codeSchema = new mongoose.Schema({
+  code: {
+    type: String,
+    required: true,
+  },
+});
+
+// Question Schema
 const questionSchema = new mongoose.Schema({
   question: {
     type: String,
@@ -22,7 +25,8 @@ const questionSchema = new mongoose.Schema({
   },
 });
 
-const quizSchema = mongoose.Schema({
+// Quiz Schema
+const quizSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -32,22 +36,23 @@ const quizSchema = mongoose.Schema({
     required: true,
   },
   liveUntil: {
-    type: String,
+    type: Date, // Changed to Date type for proper date handling
     required: true,
   },
   createdOn: {
     type: Date,
     default: Date.now,
   },
-  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question", default:[] }],
-  createdBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required:true}],
-  quizCode:[{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"Code",
-    required:true
-  }]
+  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question", default: [] }],
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Changed to single reference
+  quizCode: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Code",
+    required: true,
+  }],
 });
 
+// Export Models
 export const Quiz = mongoose.model("Quiz", quizSchema);
 export const Question = mongoose.model("Question", questionSchema);
-export const Code = mongoose.model("Code", codeSchmea);
+export const Code = mongoose.model("Code", codeSchema);

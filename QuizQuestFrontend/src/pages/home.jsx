@@ -1,3 +1,7 @@
+import svg from "../assets/spotlight.svg";
+import { motion } from "framer-motion";
+
+export default function Home() {
 // import image from '/images/Grid.svg'
 function Home() {
   return (
