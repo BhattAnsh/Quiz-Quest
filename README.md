@@ -54,7 +54,7 @@ Contributions are welcome! Please read the [contributing guidelines](https://git
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/BhattAnsh/Quiz-Quest/blob/main/License.md) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/Kishore007raj/Quiz-Quest/blob/main/License.md) file for details.
 
 ## Contact
 
