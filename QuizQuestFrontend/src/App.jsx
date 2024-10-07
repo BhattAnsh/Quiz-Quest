@@ -3,6 +3,7 @@ import Home from "./pages/home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FloatingNav from "./components/navbar";
 import { IoMdHome, IoMdAddCircle, IoMdMail } from "react-icons/io";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const navItems = [
@@ -36,6 +37,7 @@ function App() {
         <FloatingNav navItems={navItems} />
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
