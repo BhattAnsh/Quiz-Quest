@@ -1,11 +1,11 @@
 import svgImage from '../images/right-img.svg';
 import googleImg from '../images/google-img.jpg'
-// bg-[rgba(249,247,247,0.1)
+// bg-[rgba(249,247,247,0.1)]
 function LoginPage() {
   return (
     <>
       <div className="flex flexbox h-screen  justify-center  bg-[#0E1C1B] text-[#aad1a9] py-[10vh]">
-        <div className="flex flexbox items-center justify-center gap-x-[100px] border-[1px] border-[#1a2224] px-[100px] w-[1000px] rounded-3xl ]">
+        <div className="flex flexbox items-center justify-center gap-x-[100px] border-[1px] border-[#1a2224] px-[100px] w-[1000px] rounded-3xl sphere-card">
           <div className="grid gap-y-[20px]">
             <div className="border-solid w-[300px] h-[45px] text-l text-center cursor-pointer flex justify-center text-center">
               <div className="text-center justify-center px-1 py-[4px] w-[250px] h-[45px] border-[1px] border-[#aad1a9] rounded-3xl gap-x-[10px] relative">
