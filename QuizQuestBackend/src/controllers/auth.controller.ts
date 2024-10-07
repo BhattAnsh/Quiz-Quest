@@ -5,13 +5,9 @@ import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import ejs from "ejs";
 import path from "path";
-// import sendEmail from "../utils/sendMail"; to send an email, you can refer to creating a file in  utils folder and import it here
+import sendEmail from "../utils/sendMail";
 import cloudinary from "cloudinary";
-import {
-  accessTokenOptions,
-  refreshTokenOptions,
-  sendToken,
-} from "../config/jwt";
+import { sendToken } from "../config/jwt";
 
 import { redis } from "../config/redis";
 require("dotenv").config();
@@ -36,27 +32,26 @@ export const registerUser = CatchAsyncError(
         email,
         password,
       };
-      // const activationToken = createActivationToken(user as any);
+      const activationToken = createActivationToken(user as any);
 
-      // const activationCode = activationToken.activationCode;
+      const activationCode = activationToken.activationCode;
       const data = { user: { username: user.username }, activationCode };
       const html = await ejs.renderFile(
         path.join(__dirname, "../mails/activation-mail.ejs"),
         data
       );
       try {
-        //waiting for krish to complete OTP structure to finalise this!
-        // await sendEmail({
-        //   email: user.email,
-        //   subject: "Account Activation",
-        //   template: "activation-mail.ejs",
-        //   data,
-        // });
-        // res.status(201).json({
-        //   success: true,
-        //   message: `Please check your email: ${user.email} to activate your account`,
-        //   activationToken: activationToken.token,
-        // });
+        await sendEmail({
+          email: user.email,
+          subject: "Account Activation",
+          template: "activation-mail.ejs",
+          data,
+        });
+        res.status(201).json({
+          success: true,
+          message: `Please check your email: ${user.email} to activate your account`,
+          activationToken: activationToken.token,
+        });
       } catch (error: any) {
         return next(new ErrorHandler(error.message, 400));
       }
@@ -66,13 +61,23 @@ export const registerUser = CatchAsyncError(
   }
 );
 
-//Create OTP functionality here, named createActivationToken and it should  return { token, activationCode };
-// the token also needs process.env.ACTIVATION_SECRET as Secret, just so that it can be verified if the api calls are legit or not
-
-interface IActivationRequest {
-  activation_token: string;
-  activation_code: string;
+interface IactivationToken {
+  token: string;
+  activationCode: string;
 }
+export const createActivationToken = (user: IUser): IactivationToken => {
+  const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
+  const token = jwt.sign(
+    { user, activationCode },
+    process.env.ACTIVATION_SECRET as Secret,
+    {
+      expiresIn: "1h",
+    }
+  );
+  console.log("hahabro");
+  return { token, activationCode };
+};
+
 interface IActivationRequest {
   activation_token: string;
   activation_code: string;
