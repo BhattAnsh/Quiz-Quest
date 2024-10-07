@@ -32,11 +32,11 @@ Thank you for considering contributing to QuizQuest! Your help is greatly apprec
 
 ## Code of Conduct
 
-Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) in all your interactions with the project.
+Please adhere to the [Code of Conduct](Code_Of_Conduct.md) in all your interactions with the project.
 
 ## Reporting Issues
 
-If you encounter any issues, please report them using the [issue tracker](https://github.com/BhattAnsh/QuizQuest/issues). Provide as much detail as possible to help us resolve the issue quickly.
+If you encounter any issues, please report them using the [issue tracker](Issue_Template.md). Provide as much detail as possible to help us resolve the issue quickly.
 
 ## Getting Help
 

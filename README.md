@@ -1,61 +1,72 @@
-# QuizQuest
+# 🎉 QuizQuest 🎉
 
-QuizQuest is a web-based application designed to create, manage, and take quizzes. It is built with modern web development technologies to provide a seamless and interactive user experience.
+**QuizQuest** is a web-based application designed to create, manage, and take quizzes. It is built with modern web development technologies to provide a seamless and interactive user experience.
 
-## Features
+## 🚀 Features
 
-- Create and manage quizzes
-- Multiple question types (multiple choice, true/false, short answer)
-- Real-time quiz results
-- User authentication and profiles
-- Responsive design for mobile and desktop
+- **Create and manage quizzes**  
+- **Multiple question types:** 
+  - ✅ Multiple choice 
+  - ✅ True/False 
+  - ✅ Short answer
+  - ✅ Essay questions 📝
+- **Real-time quiz results** 📊
+- **User authentication and profiles** 🔑
+- **Responsive design** for mobile and desktop 📱💻
+- **Timed quizzes** ⏳
+- **Question banks** for reusability and randomization 🔄
+- **Leaderboards** to encourage competition among users 🏆
+- **Feedback system** for users to rate quizzes and provide suggestions 💬
+- **Customizable quiz settings** (e.g., time limits, attempts, scoring) ⚙️
+- **Export quiz results** to CSV for analysis 📈
+- **Dark mode and light mode** for a personalized user experience 🌙☀️
 
-## Technologies Used
+## 💻 Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript (ES6+)
-- Typescript (For backend)
+- TypeScript (For backend)
 - React.js
 - Node.js
 - Express.js
 - MongoDB
 
-## Installation
+## 🛠️ Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/BhattAnsh/QuizQuest.git
    ```
-2. Navigate to the project directory:
+2. **Navigate to the project directory:**
    ```bash
    cd QuizQuest
    ```
-3. Install dependencies:
+3. **Install dependencies:**
    ```bash
    npm install
    ```
 
-## Usage
+## 🎉 Usage
 
-1. Start the development server:
+1. **Start the development server:**
    ```bash
    npm start
    ```
-2. Open your browser and go to `http://localhost:3000`
+2. **Open your browser and go to** [http://localhost:3000](http://localhost:3000) 🌐
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please read the [contributing guidelines](https://github.com/BhattAnsh/QuizQuest/blob/main/CONTRIBUTING.md) for more information.
+Contributions are welcome! Please read the [contributing guidelines](Contribution.md) for more information.
 
-## Our Valuable Contributors ❤️✨
+## 🌟 Our Valuable Contributors ❤️✨
 
 [![Contributors](https://contrib.rocks/image?repo=BhattAnsh/Quiz-Quest)](https://github.com/BhattAnsh/Quiz-Quest/graphs/contributors)
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/BhattAnsh/QuizQuest/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](License.md) file for details.
 
-## Contact
+## 📬 Contact
 
-For any inquiries, please contact [anshbat](mailto:anshbhatt140@gmail.com).
+For any inquiries, please contact [anshbat](https://github.com/BhattAnsh).
