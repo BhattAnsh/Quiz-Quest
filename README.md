@@ -31,18 +31,26 @@ QuizQuest is a web-based application designed to create, manage, and take quizze
    ```bash
    cd QuizQuest
    ```
-3. Install dependencies:
+3. Install dependencies: after changing directory depending on your tech stack.
    ```bash
    npm install
    ```
 
 ## Usage
 
-1. Start the development server:
+1. Start the Frontend server:
+   cd QuizQuestFrontend and then install the dependencies
    ```bash
    npm start
    ```
 2. Open your browser and go to `http://localhost:3000`
+
+3. To Start the backend server:
+   cd QuizQuestBackend and then install the dependencies
+   ```
+   npm run dev
+   ```
+4. Your server will be running on `http://localhost:8000`
 
 ## Contributing
 
