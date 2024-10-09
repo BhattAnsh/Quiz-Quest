@@ -26,13 +26,15 @@ To get started with the QuizQuest Backend, follow these steps:
    ```sh
    npm install
    ```
+4. **Get .env set up:**
+   Please read our [.env Guidelines](env.md)
 
 ## Usage
 
 To run the backend server, use the following command:
 
 ```sh
-npm start
+npm run dev
 ```
 
 The server will start on `http://localhost:8000`, you can change it on your .env file.
