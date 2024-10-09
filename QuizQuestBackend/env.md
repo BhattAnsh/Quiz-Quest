@@ -28,9 +28,9 @@ REDIS_URL = (Login to UPstash and create a redis database)
 REDIS_URL = rediss://default......
 
 ACTIVATION_SECRET = create your own password just 8letter password works
-```
 
-```
+
+
 SMTP_HOST = smtp.gmail.com
 SMTP_PORT = 465
 SMTP_SERVICE = gmail
