@@ -1,8 +1,14 @@
 import "./App.css";
 import Home from "./pages/home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import FloatingNav from "./components/navbar";
-import { IoMdHome, IoMdAddCircle, IoMdMail } from "react-icons/io";
+import {
+  IoMdHome,
+  IoMdAddCircle,
+  IoMdMail,
+  IoMdPeople,
+  IoMdSearch,
+} from "react-icons/io";
 
 function App() {
   const navItems = [
@@ -13,33 +19,57 @@ function App() {
     },
     {
       name: "ABOUT",
-      link: "/",
+      link: "/about",
       icon: (
         <IoMdAddCircle className="h-4 w-4 text-neutral-500 dark:text-white" />
       ),
     },
     {
       name: "CREATE",
-      link: "/",
+      link: "/create",
       icon: <IoMdMail className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
     {
       name: "JOIN",
-      link: "/",
+      link: "/join",
       icon: <IoMdMail className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "EXPLORE",
+      link: "/explore",
+      icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
   ];
 
+  // Define routes where the navbar should be hidden
+  const routesWithoutNavbar = ["/login", "/signup"];
+
+  const location = useLocation();
+
+  // Check if the current route is in the routesWithoutNavbar array
+  const shouldDisplayNavbar = !routesWithoutNavbar.includes(location.pathname);
+
   return (
     <div className="p-0 m-0">
-      <BrowserRouter>
-        <FloatingNav navItems={navItems} />
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-        </Routes>
-      </BrowserRouter>
+      {shouldDisplayNavbar && <FloatingNav navItems={navItems} />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" />
+        <Route path="/create" />
+        <Route path="/join" />
+        <Route path="/explore" />
+        <Route path="/login" />
+        <Route path="/signup" />
+      </Routes>
     </div>
   );
 }
 
-export default App;
+// Wrap App component with BrowserRouter to use useLocation hook
+const WrappedApp = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+export default WrappedApp;
