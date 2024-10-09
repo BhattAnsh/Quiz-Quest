@@ -6,7 +6,9 @@ ORIGIN = ['http://localhost:3000/']
 NODE_ENV = 'development'
 ```
 
+```
 DB_URL = '(Put your mongodb uri or run locally!)'
+```
 
 ```
 CLOUD_NAME= (create a cloud account and get the cloud name)
