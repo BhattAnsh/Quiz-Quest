@@ -61,11 +61,9 @@ export default function FloatingNav({ navItems, className }) {
           {" "}
           {navItems.map((navItem, idx) => (
             <Link
-              key={`link=${idx}`}
-              href={navItem.link}
-              className={cn(
-                "relative text-white items-center BG flex space-x-1 "
-              )}
+              key={`link-${idx}`} 
+              to={navItem.link} 
+              className={cn("relative text-white items-center BG flex space-x-1")}
             >
               <span className="block sm:hidden">{navItem.icon}</span>
               <span className="hidden sm:block text-sm">{navItem.name}</span>
@@ -86,11 +84,16 @@ export default function FloatingNav({ navItems, className }) {
 }
 
 FloatingNav.propTypes = {
-  navItems: PropTypes.string,
+  navItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      icon: PropTypes.element.isRequired,
+    })
+  ).isRequired,
   className: PropTypes.string,
 };
 
 FloatingNav.defaultProps = {
-  navItems: "",
   className: "",
 };
