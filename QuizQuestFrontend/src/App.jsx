@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import FloatingNav from "./components/navbar";
+import Login from "./pages/Login"
 import {
   IoMdHome,
   IoMdAddCircle,
@@ -49,7 +50,7 @@ const routeDefinitions = [
   { path: "/create", element: <CreateQuiz /> },
   { path: "/join", element: <div>Join Page</div> }, 
   { path: "/explore", element: <div>Explore Page</div> },
-  { path: "/login", element: <div>Login Page</div> }, 
+  { path: "/login", element: <Login /> }, 
   { path: "/signup", element: <div>Signup Page</div> }, 
 ];
 
