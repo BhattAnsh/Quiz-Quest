@@ -11,6 +11,7 @@ import {
 import Home from "./pages/home";
 import CreateQuiz from "./pages/create";
 
+import ProfileCard from "./components/ProfileCard";
 
 const navItems = [
   {
@@ -51,6 +52,7 @@ const routeDefinitions = [
   { path: "/explore", element: <div>Explore Page</div> },
   { path: "/login", element: <div>Login Page</div> }, 
   { path: "/signup", element: <div>Signup Page</div> }, 
+  { path: "/profile", element: <ProfileCard/> }, 
 ];
 
 function App() {
