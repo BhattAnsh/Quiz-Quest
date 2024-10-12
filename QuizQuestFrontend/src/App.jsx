@@ -1,6 +1,8 @@
+// App.jsx
 import "./App.css";
 import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import FloatingNav from "./components/navbar";
+import Footer from "./components/Footer"; // Importing the Footer component
 import {
   IoMdHome,
   IoMdAddCircle,
@@ -10,7 +12,6 @@ import {
 } from "react-icons/io";
 import Home from "./pages/home";
 import CreateQuiz from "./pages/create";
-
 import ProfileCard from "./components/ProfileCard";
 
 const navItems = [
@@ -48,11 +49,11 @@ const routeDefinitions = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <div>About Page</div> },
   { path: "/create", element: <CreateQuiz /> },
-  { path: "/join", element: <div>Join Page</div> }, 
+  { path: "/join", element: <div>Join Page</div> },
   { path: "/explore", element: <div>Explore Page</div> },
-  { path: "/login", element: <div>Login Page</div> }, 
-  { path: "/signup", element: <div>Signup Page</div> }, 
-  { path: "/profile", element: <ProfileCard/> }, 
+  { path: "/login", element: <div>Login Page</div> },
+  { path: "/signup", element: <div>Signup Page</div> },
+  { path: "/profile", element: <ProfileCard /> },
 ];
 
 function App() {
@@ -66,9 +67,12 @@ function App() {
   const shouldDisplayNavbar = !routesWithoutNavbar.includes(location.pathname);
 
   return (
-    <div className="p-0 m-0">
+    <div className="flex flex-col min-h-screen p-0 m-0">
       {shouldDisplayNavbar && <FloatingNav navItems={navItems} />}
-      {routing}
+      <div className="flex-grow"> {/* Main content expands to fill available space */}
+        {routing}
+      </div>
+      <Footer /> {/* Render the Footer here */}
     </div>
   );
 }
