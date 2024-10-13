@@ -10,7 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import toast, { Toaster } from 'react-hot-toast';
 
-const QuizCreator = () => {
+const CreateQuiz = () => {
   const [step, setStep] = useState(0);
   const [quizTitle, setQuizTitle] = useState('');
   const [questions, setQuestions] = useState([]);
@@ -322,4 +322,4 @@ const QuizCreator = () => {
   );
 };
 
-export default QuizCreator;
+export default CreateQuiz;
