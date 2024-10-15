@@ -1,39 +1,21 @@
 import express from "express";
-import { isAuthenticated } from "../../middleware/auth";
-import { quizAuthorization } from "../../middleware/quizAuth.ts";
 import {
-  addQuestion,
-  createQuiz,
-  delCode,
-  deleteQuestion,
+  createNewQuizForm,
+  getAllQuizzes,
+  getQuizById,
+  updateQuiz,
   deleteQuiz,
-  editQuestion,
-  editQuiz,
-} from "../../controllers/quiz.controller.ts";
+  publishQuiz,
+} from "../../controllers/quiz.controller";
+import { quizAuthorization } from "../../middleware/quizAuth";
 
 const quizRouter = express.Router();
 
-quizRouter.post("/create", isAuthenticated, createQuiz);
-quizRouter.post("/addQuestion", isAuthenticated, addQuestion);
-quizRouter.put("/editQuiz", isAuthenticated, quizAuthorization, editQuiz);
-quizRouter.delete(
-  "/deleteQuiz",
-  isAuthenticated,
-  quizAuthorization,
-  deleteQuiz
-);
-quizRouter.put(
-  "/editQuestion",
-  isAuthenticated,
-  quizAuthorization,
-  editQuestion
-);
-quizRouter.delete(
-  "/delQuestion",
-  isAuthenticated,
-  quizAuthorization,
-  deleteQuestion
-);
-quizRouter.get("/test", delCode);
+quizRouter.post("/createQuiz", quizAuthorization, createNewQuizForm);
+quizRouter.get("/getAllQuizzes", getAllQuizzes);
+quizRouter.get("/getQuiz/:id", getQuizById);
+quizRouter.put("/updateQuiz/:id", updateQuiz);
+quizRouter.delete("/deleteQuiz/:id", deleteQuiz);
+quizRouter.post("publish/:quizId", publishQuiz);
 
 export default quizRouter;
