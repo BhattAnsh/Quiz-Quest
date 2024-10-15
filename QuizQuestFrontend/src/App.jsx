@@ -1,7 +1,7 @@
 import "./App.css";
-import Home from "./pages/home";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import FloatingNav from "./components/navbar";
+import Login from "./pages/Login"
 import {
   IoMdHome,
   IoMdAddCircle,
@@ -9,42 +9,59 @@ import {
   IoMdPeople,
   IoMdSearch,
 } from "react-icons/io";
+import Home from "./pages/home";
+import CreateQuiz from "./pages/create";
+
+import ProfileCard from "./components/ProfileCard";
+
+const navItems = [
+  {
+    name: "HOME",
+    link: "/",
+    icon: <IoMdHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+  {
+    name: "ABOUT",
+    link: "/about",
+    icon: (
+      <IoMdAddCircle className="h-4 w-4 text-neutral-500 dark:text-white" />
+    ),
+  },
+  {
+    name: "CREATE",
+    link: "/create",
+    icon: <IoMdMail className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+  {
+    name: "JOIN",
+    link: "/join",
+    icon: <IoMdPeople className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+  {
+    name: "EXPLORE",
+    link: "/explore",
+    icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  },
+];
+
+// Route definitions
+const routeDefinitions = [
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <div>About Page</div> },
+  { path: "/create", element: <CreateQuiz /> },
+  { path: "/join", element: <div>Join Page</div> }, 
+  { path: "/explore", element: <div>Explore Page</div> },
+  { path: "/login", element: <Login /> }, 
+  { path: "/signup", element: <div>Signup Page</div> }, 
+  { path: "/profile", element: <ProfileCard/> }, 
+];
 
 function App() {
-  const navItems = [
-    {
-      name: "HOME",
-      link: "/",
-      icon: <IoMdHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "ABOUT",
-      link: "/about",
-      icon: (
-        <IoMdAddCircle className="h-4 w-4 text-neutral-500 dark:text-white" />
-      ),
-    },
-    {
-      name: "CREATE",
-      link: "/create",
-      icon: <IoMdMail className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "JOIN",
-      link: "/join",
-      icon: <IoMdMail className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "EXPLORE",
-      link: "/explore",
-      icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-  ];
+  const location = useLocation();
+  const routing = useRoutes(routeDefinitions);
 
   // Define routes where the navbar should be hidden
   const routesWithoutNavbar = ["/login", "/signup"];
-
-  const location = useLocation();
 
   // Check if the current route is in the routesWithoutNavbar array
   const shouldDisplayNavbar = !routesWithoutNavbar.includes(location.pathname);
@@ -52,15 +69,7 @@ function App() {
   return (
     <div className="p-0 m-0">
       {shouldDisplayNavbar && <FloatingNav navItems={navItems} />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" />
-        <Route path="/create" />
-        <Route path="/join" />
-        <Route path="/explore" />
-        <Route path="/login" />
-        <Route path="/signup" />
-      </Routes>
+      {routing}
     </div>
   );
 }
