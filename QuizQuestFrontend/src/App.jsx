@@ -13,6 +13,8 @@ import Home from "./pages/home";
 import CreateQuiz from "./pages/create";
 
 import ProfileCard from "./components/ProfileCard";
+import Footer from "./components/Footer";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const navItems = [
   {
@@ -70,6 +72,7 @@ function App() {
     <div className="p-0 m-0">
       {shouldDisplayNavbar && <FloatingNav navItems={navItems} />}
       {routing}
+      <Footer></Footer>
     </div>
   );
 }
