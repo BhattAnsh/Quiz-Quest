@@ -39,3 +39,8 @@
 .read-the-docs {
   color: #888;
 } */
+
+.sphere-card {
+  background: rgb(72,255,59);
+  background: radial-gradient(circle, rgba(72,255,59,0.4789565484396884) 0%, rgba(180,180,181,0.23245794899991246) 35%);
+}

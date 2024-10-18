@@ -1,204 +1,166 @@
 import { Request, Response, NextFunction } from "express";
-import { Quiz, Question, Code } from "../models/quiz.model";
-import crypto from "crypto";
+import { Quiz } from "../models/quiz.model";
 import ErrorHandler from "../utils/errorHandler";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
-// Helper function to create a random quiz code
-const codeCreation = (): string => {
-  return crypto.randomBytes(4).toString("hex");
-};
-
-// Deletion of related questions for a quiz
-export const delQuestion = CatchAsyncError(
-  async (id: string, next: NextFunction) => {
-    try {
-      const quiz = await Quiz.findById(id).select("questions");
-      if (quiz) {
-        quiz.questions.forEach(async (qId: any) => {
-          await Question.findByIdAndDelete(qId);
-        });
-      }
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
-    }
-  }
-);
-
-// Deletion of the code associated with a quiz
-export const delCode = CatchAsyncError(
-  async (id: string, next: NextFunction) => {
-    try {
-      const quiz = await Quiz.findById(id).select("quizCode");
-      if (quiz) {
-        await Code.findByIdAndDelete(quiz.quizCode);
-      }
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
-    }
-  }
-);
+import { codeCreation } from "./question.controller";
 
 // Create a quiz
-export const createQuiz = CatchAsyncError(
+export const createNewQuizForm = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, description, liveUntil, questions, createdBy } = req.body;
+    const { title, description, responseLimits, toAttempt } = req.body;
 
-    try {
-      const existQuiz = await Quiz.findOne({ name });
-      if (existQuiz) {
-        return next(
-          new ErrorHandler("Quiz already exists with the same name", 400)
-        );
-      }
-
-      const code = codeCreation();
-      const newCode = new Code({ code });
-      const quizCode = (await newCode.save())._id;
-      const newQuiz = new Quiz({
-        name,
-        description,
-        liveUntil,
-        questions,
-        createdBy,
-        quizCode,
-      });
-
-      await newQuiz.save();
-
-      res.status(201).json({
-        success: true,
-        message: "Quiz Created",
-      });
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
+    // Validation for required fields
+    if (!title || !description) {
+      return next(new ErrorHandler("Title and description are required.", 400));
     }
+    // Generate a unique quiz code
+    let quizCode;
+    do {
+      quizCode = codeCreation();
+    } while (await Quiz.findOne({ quizCode }));
+    const defaultSection = {
+      title: "Section 1",
+      questions: [],
+    };
+    const liveUntil = new Date();
+    liveUntil.setDate(liveUntil.getDate() + 7); // Adds 7 days
+
+    const quizData = {
+      title,
+      description,
+      sections: [defaultSection],
+      quizManagers: [req.user?._id], // You can modify this based on your business logic
+      quizCode,
+      responseLimits: responseLimits || 1,
+      toAttempt: toAttempt || false,
+      createdBy: req.user?._id, // Assuming user ID is attached to req
+      createdAt: new Date(),
+      liveUntil,
+      status: "draft", // Default status
+    };
+
+    const quiz = await Quiz.create(quizData);
+
+    res.status(201).json({
+      success: true,
+      data: quiz,
+    });
   }
 );
 
-// Edit quiz details
-export const editQuiz = CatchAsyncError(
+// Get all quizzes
+export const getAllQuizzes = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, description } = req.body;
-    const quizId = req.query.q_id as string;
+    const quizzes = await Quiz.find();
 
-    try {
-      const updatedQuiz = await Quiz.findByIdAndUpdate(
-        quizId,
-        { name, description },
-        { new: true }
-      );
-      if (!updatedQuiz) {
-        return next(new ErrorHandler("Quiz not found", 404));
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Quiz is updated",
-        updatedQuiz,
-      });
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
-    }
+    res.status(200).json({
+      success: true,
+      count: quizzes.length,
+      data: quizzes,
+    });
   }
 );
 
-// Delete quiz
+// Get a quiz by ID
+export const getQuizById = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const quiz = await Quiz.findById(id).populate("sections.questions");
+
+    if (!quiz) {
+      return next(new ErrorHandler("Quiz not found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: quiz,
+    });
+  }
+);
+
+// Delete a quiz
 export const deleteQuiz = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const quizId = req.query.quiz_id as string;
+    const { id } = req.params;
+    const deletedQuiz = await Quiz.findByIdAndDelete(id);
 
-    try {
-      await delQuestion(quizId, next);
-      await delCode(quizId, next);
-      const deletedQuiz = await Quiz.findByIdAndDelete(quizId);
-
-      if (!deletedQuiz) {
-        return next(new ErrorHandler("Quiz doesn't exist", 404));
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Quiz is deleted successfully",
-      });
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
+    if (!deletedQuiz) {
+      return next(new ErrorHandler("Quiz not found", 404));
     }
+
+    res.status(204).json({
+      success: true,
+      message: "Quiz deleted successfully",
+    });
   }
 );
-
-// Add question to quiz
-export const addQuestion = CatchAsyncError(
+// use the complete quiz button on frontend
+export const publishQuiz = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { question, options, correctOption } = req.body;
-    const quizId = req.query.quiz_id as string;
+    const { quizId } = req.params;
 
-    try {
-      const newQuestion = new Question({ question, options, correctOption });
-      const q = (await newQuestion.save()) as any;
+    // Find the quiz by ID
+    const quiz = await Quiz.findById(quizId);
 
-      const quiz = await Quiz.findById(quizId);
-      if (!quiz) {
-        return next(new ErrorHandler("Quiz doesn't exist", 404));
-      }
-
-      quiz.questions.push(q._id);
-      await quiz.save();
-
-      res.status(200).json({
-        success: true,
-        message: "Added question to quiz",
-        questionId: q._id,
-      });
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
+    if (!quiz) {
+      return next(new ErrorHandler("Quiz not found.", 404));
     }
-  }
-);
 
-// Edit question
-export const editQuestion = CatchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { question, options, correctOption } = req.body;
-    const questionId = req.query.question_id as string;
-
-    try {
-      const updatedQuestion = await Question.findByIdAndUpdate(
-        questionId,
-        { question, options, correctOption },
-        { new: true }
+    // Ensure the quiz is still in draft status
+    if (quiz.status !== "draft") {
+      return next(
+        new ErrorHandler("Quiz is already published or not in draft.", 400)
       );
-      if (!updatedQuestion) {
-        return next(new ErrorHandler("Question not found", 404));
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Question is updated",
-        updatedQuestion,
-      });
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
     }
+
+    // Validate all sections and questions before publishing (optional)
+    // Example: Ensure at least one section and one question exist
+    if (!quiz.sections || quiz.sections.length === 0) {
+      return next(
+        new ErrorHandler(
+          "At least one section is required to publish the quiz.",
+          400
+        )
+      );
+    }
+    quiz.sections.forEach((section: any, index: number) => {
+      if (!section.questions || section.questions.length === 0) {
+        return next(
+          new ErrorHandler(
+            `Section ${index + 1} must have at least one question.`,
+            400
+          )
+        );
+      }
+    });
+
+    // If validation passes, update the status to "published"
+    quiz.status = "published";
+    await quiz.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Quiz successfully published.",
+    });
   }
 );
 
-// Delete question
-export const deleteQuestion = CatchAsyncError(
+// Update a quiz
+export const updateQuiz = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const questionId = req.query.question_id as string;
+    const { id } = req.params;
+    const updatedQuiz = await Quiz.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-    try {
-      const deletedQuestion = await Question.findByIdAndDelete(questionId);
-      if (!deletedQuestion) {
-        return next(new ErrorHandler("Question doesn't exist", 404));
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Question is deleted successfully",
-      });
-    } catch (err: any) {
-      return next(new ErrorHandler(err.message, 500));
+    if (!updatedQuiz) {
+      return next(new ErrorHandler("Quiz not found", 404));
     }
+
+    res.status(200).json({
+      success: true,
+      data: updatedQuiz,
+    });
   }
 );
