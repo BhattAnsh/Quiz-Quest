@@ -13,6 +13,7 @@ export const validateCreateQuestion = [
       "linear-scale",
       "date",
       "time",
+      "true-false",
     ])
     .withMessage("Type must be one of the predefined options."),
   body("options").custom((value, { req }) => {
@@ -59,6 +60,7 @@ export const validateUpdateQuestion = [
       "linear-scale",
       "date",
       "time",
+      "true-false",
     ])
     .withMessage("Type must be one of the predefined options."),
   body("options")
