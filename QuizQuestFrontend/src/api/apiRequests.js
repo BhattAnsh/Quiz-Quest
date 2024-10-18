@@ -1,37 +1,51 @@
-const API_BASE_URL = import.meta.env.REACT_APP_API_HOST || "http://localhost:3000";
+const host = import.meta.env.REACT_APP_API_HOST || "http://localhost:8000";
+const API_BASE_URL = `${host}/api/v1`;
+
+import axios from 'axios';
 
 // API request function
 const apiRequest = async (url, method, body = null) => {
+  const accessToken = sessionStorage.getItem('accessToken');
   const options = {
     method,
+    url: `${API_BASE_URL}${url}`,
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
     },
-    credentials: 'include', 
-    body: body ? JSON.stringify(body) : null
+    withCredentials: true,
+    data: body,
   };
 
   try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      const errorData = await response.json(); 
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message || "Unknown error"}`);
-    }
-    return await response.json();
+    const response = await axios(options);
+    return response.data;
   } catch (error) {
     console.error('API Request Error:', error);
-    throw error; 
+    if (error.response) {
+      throw new Error(`HTTP error! status: ${error.response.status}, message: ${error.response.data.message || "Unknown error"}`);
+    }
+    throw error;
   }
 };
 
 // API functions
-export const registerAPI = (data) => apiRequest(`${API_BASE_URL}/user/register`, 'POST', data);
-export const loginAPI = (data) => apiRequest(`${API_BASE_URL}/user/login`, 'POST', data);
+// User
+export const registerAPI = (data) => apiRequest('/auth/register', 'POST', data);
+export const loginAPI = (data) => apiRequest('/auth/login', 'POST', data);
 
-export const createQuiz = (quizData) => apiRequest(`${API_BASE_URL}/quizcreate`, 'POST', quizData);
-export const addQuestion = (questionData) => apiRequest(`${API_BASE_URL}/quiz/addQuestion`, 'POST', questionData);
-export const editQuiz = (quizData) => apiRequest(`${API_BASE_URL}/quiz/editQuiz`, 'PUT', quizData);
-export const deleteQuiz = (quizId) => apiRequest(`${API_BASE_URL}/quiz/deleteQuiz`, 'DELETE', { quizId });
-export const editQuestion = (questionData) => apiRequest(`${API_BASE_URL}/quiz/editQuestion`, 'PUT', questionData);
-export const deleteQuestion = (questionId) => apiRequest(`${API_BASE_URL}/quiz/delQuestion`, 'DELETE', { questionId });
-export const testEndpoint = () => apiRequest(`${API_BASE_URL}/quiz/test`, 'GET');
+// Quiz 
+export const createQuiz = (quizData) => apiRequest('/quiz/createQuiz', 'POST', quizData);
+export const getAllQuizzes = () => apiRequest('/quiz/getAllQuizzes', 'GET');
+export const getQuizById = (quizId) => apiRequest(`/quiz/getQuiz/${quizId}`, 'GET');
+export const updateQuiz = (quizId, quizData) => apiRequest(`/quizzes/updateQuiz/${quizId}`, 'PUT', quizData);
+export const deleteQuiz = (quizId) => apiRequest(`/quiz/deleteQuiz/${quizId}`, 'DELETE');
+export const publishQuiz = (quizId) => apiRequest(`/quiz/publish/${quizId}`, 'POST');
+
+// Question 
+export const addQuestion = (questionData) => apiRequest(`/quiz/createQuestion`, 'POST', questionData);
+export const getAllQuestionsByQuiz = (quizId) => apiRequest(`/quiz/quizzes/${quizId}`, 'GET');
+export const getQuestionById = (questionId) => apiRequest(`/quiz/questions/${questionId}`, 'GET');
+export const updateQuestion = (questionId, questionData) => apiRequest(`/quiz/updateQuestion/${questionId}`, 'PUT', questionData);
+export const deleteQuestion = (questionId) => apiRequest(`/quiz/deleteQuestion/${questionId}`, 'DELETE');
+export const duplicateQuestion = (questionId) => apiRequest(`/quiz/questions/${questionId}/duplicate`, 'POST');
