@@ -61,7 +61,9 @@ Contributions are welcome! Please read the [contributing guidelines](Contributio
 
 ## 🌟 Our Valuable Contributors ❤️✨
 
-[![Contributors](https://img.shields.io/github/contributors/BhattAnsh/Quiz-Quest)](https://github.com/BhattAnsh/Quiz-Quest/graphs/contributors)
+<a href="https://github.com/BhattAnsh/Quiz-Quest/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=BhattAnsh/Quiz-Quest" />
+</a>
 
 ## 📄 License
 
