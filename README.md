@@ -5,9 +5,9 @@
 ## 🚀 Features
 
 - **Create and manage quizzes**  
-- **Multiple question types:** 
-  - ✅ Multiple choice 
-  - ✅ True/False 
+- **Multiple question types:**
+  - ✅ Multiple choice
+  - ✅ True/False
   - ✅ Short answer
   - ✅ Essay questions 📝
 - **Real-time quiz results** 📊
@@ -61,7 +61,7 @@ Contributions are welcome! Please read the [contributing guidelines](Contributio
 
 ## 🌟 Our Valuable Contributors ❤️✨
 
-[![Contributors](https://contrib.rocks/image?repo=BhattAnsh/Quiz-Quest)](https://github.com/BhattAnsh/Quiz-Quest/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/BhattAnsh/Quiz-Quest)](https://github.com/BhattAnsh/Quiz-Quest/graphs/contributors)
 
 ## 📄 License
 
