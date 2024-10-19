@@ -6,9 +6,13 @@ import { getAllQuestionsByQuiz, deleteQuestion, publishQuiz } from '../api/apiRe
 import toast from 'react-hot-toast';
 import { Label } from './ui/label';
 
-const ReviewQuiz = ({ quizId, quizTitle }) => {
+const ReviewQuiz = ({ quizId, quizTitle, step, setStep, questions, setQuestions }) => {
   const [loading, setLoading] = useState(true);
   const [ques, setQues] = useState([]);
+
+  const handleGoBack = () => {
+    setStep(step > 0 ? step - 1 : 0); 
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -16,6 +20,7 @@ const ReviewQuiz = ({ quizId, quizTitle }) => {
       try {
         const fetchedQuestions = await getAllQuestionsByQuiz(quizId);
         if (fetchedQuestions.success) {
+          // console.log(fetchedQuestions);
           setQues(fetchedQuestions.data); 
         }
       } catch (error) {
@@ -29,10 +34,12 @@ const ReviewQuiz = ({ quizId, quizTitle }) => {
 
   const handleRemoveQuestion = async (index) => {
     const questionId = ques[index]._id;
-    console.log("Deleting question with ID:", questionId); 
+    const qId = questions[index];
+    // console.log("Deleting question with ID:", questionId); 
     try {
       await deleteQuestion(questionId);
       setQues((prev) => prev.filter((_, i) => i !== index));
+      setQuestions((prevQuestions) => prevQuestions.filter((_, i) => i !== index));
       toast.success('Question removed successfully!');
     } catch (error) {
       console.error('Error deleting question:', error);
@@ -44,6 +51,7 @@ const ReviewQuiz = ({ quizId, quizTitle }) => {
     try {
       await publishQuiz(quizId);
       toast.success('Quiz published successfully!');
+      setStep(step+1);
     } catch (error) {
       toast.error('Failed to publish quiz: ' + (error.response?.data?.message || error.message));
     }
@@ -102,9 +110,8 @@ const ReviewQuiz = ({ quizId, quizTitle }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handlePublishQuiz} disabled={ques.length === 0}>
-          Publish Quiz
-        </Button>
+      <Button onClick={handleGoBack} className="mb-4 mr-2">Add Question</Button>
+      <Button onClick={handlePublishQuiz} className="mb-4 mr-2" disabled={ques.length === 0}>Publish Quiz</Button>
       </CardFooter>
     </motion.div>
   );

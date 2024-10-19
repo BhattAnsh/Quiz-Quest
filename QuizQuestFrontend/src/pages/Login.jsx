@@ -3,6 +3,7 @@ import svgImage from '../images/right-img.svg';
 import googleImg from '../images/google-img.jpg';
 import {  useNavigate } from 'react-router-dom';
 import { loginAPI } from '@/api/apiRequests';
+import { Input } from '@/components/ui/input';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -53,12 +54,11 @@ function Login() {
               </div>
             </div>
 
-            <p className="text-center text-[whitesmoke]">OR</p>
+            <p className="text-center text-sm text-[whitesmoke]">OR</p>
 
             <form className="grid gap-y-[28px]" onSubmit={handleSubmit}>
-              <div>
-                {/* <label htmlFor="name">Name:</label> */}
-                <input
+              {/* <div>
+                <Input
                   type="text"
                   id="name"
                   name="name"
@@ -68,10 +68,10 @@ function Login() {
                   placeholder="Name"
                   required
                 />
-              </div>
+              </div> */}
               <div>
                 {/* <label htmlFor="Email">Email:</label> */}
-                <input
+                <Input
                   type="email"
                   id="email"
                   name="email"
@@ -84,7 +84,7 @@ function Login() {
               </div>
               <div>
                 {/* <label htmlFor="password">Password:</label> */}
-                <input
+                <Input
                   type="password"
                   id="password"
                   name="password"
@@ -95,13 +95,13 @@ function Login() {
                   required
                 />
               </div>
-              <button type="submit" className="bg-[#aad1a9] rounded-lg h-[35px] text-[#2b3d2a] font-medium">Sign-up</button>
+              <button type="submit" className="bg-[#aad1a9] rounded-lg h-[35px] text-[#2b3d2a] font-medium">Login</button>
             </form>
 
-            <p className="text-center text-[whitesmoke]">OR</p>
+            {/* <p className="text-center text-[whitesmoke]">OR</p> */}
             <p className="text-center text-[whitesmoke]">
-              Already have an account?
-              <span className="text-[#aad1a9] cursor-pointer"> SignIn</span>
+              Don't have an account?
+              <span className="text-[#aad1a9] cursor-pointer"> SignUp</span>
             </p>
           </div>
 

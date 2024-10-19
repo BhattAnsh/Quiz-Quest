@@ -205,7 +205,7 @@ const quizSchema: Schema<IQuiz> = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["active", "inactive", "draft", "completed", "archived"],
+    enum: ["active", "inactive", "draft", "completed", "archived", "published"],
     default: "draft",
   },
 });

@@ -317,12 +317,13 @@ const handleAddQuestion = async () => {
                 <div>
                   {currentQuestion.options.map((option, index) => (
                     <div key={index} className='flex flex-row m-2 mb-1'>
-                      <span className="mr-2">{option.label}</span> {/* Display predefined label */}
+                      <span className="mt-2 mr-3">{option.label}</span> 
                       <Input
                         type="text"
                         placeholder="Option Value"
                         value={option.value}
                         onChange={(e) => handleOptionChange(index, e.target.value)}
+                        className="mt-2"
                       />
                       <Button variant="destructive" className="m-2" onClick={() => removeOption(index)}>Remove</Button>
                     </div>
@@ -332,7 +333,7 @@ const handleAddQuestion = async () => {
                     placeholder="Enter correct answer"
                     value={currentQuestion.correctOptions}
                     onChange={(e) => setCurrentQuestion({ ...currentQuestion, correctOptions: e.target.value })}
-                    className="mb-4"
+                    className="mb-4 mt-2"
                   />
                 </div>
               )}
@@ -373,6 +374,7 @@ const handleAddQuestion = async () => {
               <Button onClick={handleAddQuestion} className="mb-4 mr-2">Add Question</Button>
               <Button onClick={handleGoNext}>Review and Create</Button>
               </div>
+
               <div className="w-full space-y-2">
                 {questions.map((q, index) => (
                   <div key={index} className="flex items-center justify-between w-full p-2 bg-gray-50 rounded">
@@ -381,6 +383,7 @@ const handleAddQuestion = async () => {
                   </div>
                 ))}
               </div>
+
             </CardFooter>
           </motion.div>
         );
@@ -390,8 +393,8 @@ const handleAddQuestion = async () => {
           <ReviewQuiz 
               quizId={quizId}
               quizTitle={quizTitle} 
-              questions={questions}
-              setQuestions={setQuestions}
+              setStep={setStep}
+              step={step} questions={questions} setQuestions={setQuestions}
           />
         );
 
@@ -399,11 +402,11 @@ const handleAddQuestion = async () => {
           return (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <CardHeader>
-                <CardTitle>Publish Quiz</CardTitle>
+                <CardTitle>Your Quiz Code</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className='p-4 bg-gray-100 rounded-lg'>
-                <p>Generated Code: {generatedCode}</p>
+                <div className='p-4 bg-gray-100 rounded-lg mt-2 mb-2'>
+                <p>{generatedCode}</p>
                 </div>
                 <Button onClick={copyToClipboard}>Copy Code</Button>
               </CardContent>

@@ -40,12 +40,38 @@ export const getAllQuizzes = () => apiRequest('/quiz/getAllQuizzes', 'GET');
 export const getQuizById = (quizId) => apiRequest(`/quiz/getQuiz/${quizId}`, 'GET');
 export const updateQuiz = (quizId, quizData) => apiRequest(`/quizzes/updateQuiz/${quizId}`, 'PUT', quizData);
 export const deleteQuiz = (quizId) => apiRequest(`/quiz/deleteQuiz/${quizId}`, 'DELETE');
-export const publishQuiz = (quizId) => apiRequest(`/quiz/publish/${quizId}`, 'POST');
+// export const publishQuiz = (quizId) => apiRequest(`/quiz/publish/${quizId}`, 'POST');
 
 // Question 
 export const addQuestion = (questionData) => apiRequest(`/quiz/createQuestion`, 'POST', questionData);
 export const getAllQuestionsByQuiz = (quizId) => apiRequest(`/quiz/quizzes/${quizId}`, 'GET');
 export const getQuestionById = (questionId) => apiRequest(`/quiz/questions/${questionId}`, 'GET');
 export const updateQuestion = (questionId, questionData) => apiRequest(`/quiz/updateQuestion/${questionId}`, 'PUT', questionData);
-export const deleteQuestion = (questionId) => apiRequest(`/quiz/deleteQuestion/${questionId}`, 'DELETE');
+// export const deleteQuestion = (questionId) => apiRequest(`/quiz/deleteQuestion/${questionId}`, 'DELETE');
 export const duplicateQuestion = (questionId) => apiRequest(`/quiz/questions/${questionId}/duplicate`, 'POST');
+
+
+
+// DELETE QUESTION -- no body reqd for deleting
+export const deleteQuestion = async (questionId) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/quiz/deleteQuestion/${questionId}`);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting question:', error.response ? error.response.data : error.message);
+    throw error; 
+  }
+};
+
+export const publishQuiz = async (quizId) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/quiz/publish/${quizId}`);
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    console.error('Error publishing quiz:', error.response ? error.response.data : error.message);
+    throw error; 
+  }
+};
+
