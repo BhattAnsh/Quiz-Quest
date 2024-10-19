@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BackgroundBeamsWithCollision } from '../components/Background.jsx';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -9,139 +9,293 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import toast, { Toaster } from 'react-hot-toast';
+import { createQuiz, addQuestion, deleteQuestion } from '../api/apiRequests';
+import ReviewQuiz from '../components/ReviewQuiz.jsx';
 
 const CreateQuiz = () => {
   const [step, setStep] = useState(0);
   const [quizTitle, setQuizTitle] = useState('');
+  const [quizDesc, setQuizDesc] = useState('');
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({
+    questionText: '',
     type: '',
-    question: '',
     options: [''],
-    answer: '',
-    isMandatory: false,
-    points: 1
+    correctOptions: [], 
+    validation: { 
+      required: false,
+      regex: null,
+      errorMessage: ''
+    },
+    mandatory: false,
+    points: 1,
+    sectionIndex: 0
   });
+  const [quizId, setQuizId] = useState('');
   const [generatedCode, setGeneratedCode] = useState('');
-  
+
   const resetCurrentQuestion = () => {
     setCurrentQuestion({
+      questionText: '',
       type: '',
-      question: '',
       options: [''],
-      answer: '',
-      isMandatory: false,
-      points: 1
+      correctOptions: '',
+      validation: 'valid',
+      mandatory: false,
+      points: 1,
+      sectionIndex: 0
     });
   };
-  
-  const handleRemoveQuestion = (index) => {
-    setQuestions((prevQuestions) => prevQuestions.filter((_, i) => i !== index));
-    toast.success('Question removed successfully!');
+
+  const handleRemoveQuestion = async (index) => {
+    const questionToRemove = questions[index];
+    try {
+      if (questionToRemove._id) {
+        await deleteQuestion(questionToRemove._id);
+      }
+      setQuestions((prevQuestions) => prevQuestions.filter((_, i) => i !== index));
+      toast.success('Question removed successfully!');
+    } catch (error) {
+      toast.error('Failed to remove question: ' + error.message);
+    }
   };
 
   const handleGoBack = () => {
-    if (step > 0) {
-      setStep(step - 1);
-    }
-    if (step === 3) {
-      setStep(0);
-    }
+    setStep(step > 0 ? step - 1 : 0);
   };
-  
+
   const handleGoNext = () => {
-    if (step === 0) {
-      if (quizTitle.trim() === '') {
-        toast.error('Please enter a quiz title before proceeding.');
-        return;
-      }
-      setStep(1);
-    } else if (step === 1) {
-      if (questions.length === 0) {
-        toast.error('Please add at least one question.');
-        return;
-      }
-      setStep(2);
-    } else if (step === 2) {
-      setStep(3);
+    if (step === 0 && quizTitle.trim() === '') {
+      toast.error('Please enter a quiz title before proceeding.');
+      return;
     }
+    if (step === 1 && questions.length === 0) {
+      toast.error('Please add at least one question.');
+      return;
+    }
+    setStep(step + 1);
   };
-  
+
   const validateCurrentQuestion = () => {
-    if (currentQuestion.type === '' || currentQuestion.question.trim() === '' || currentQuestion.answer.trim() === '') {
+    if (!currentQuestion.type || !currentQuestion.questionText.trim()) {
       toast.error('Please fill in all required fields before adding the question.');
       return false;
     }
-  
+
     if (currentQuestion.type === 'multiple-choice') {
-      const hasEmptyOption = currentQuestion.options.some(option => option.trim() === '');
-      if (hasEmptyOption) {
-        toast.error('Please fill in all options before adding the question.');
+      const hasEmptyOption = currentQuestion.options.some(option => option.value.trim() === '');
+      
+      const hasNoCorrectOption = !currentQuestion.correctOptions || currentQuestion.correctOptions.length === 0;
+    
+      if (hasEmptyOption || hasNoCorrectOption) {
+        toast.error('Please fill in all options and the correct answer.');
         return false;
       }
     }
-  
+    
+
+    if (currentQuestion.points <= 0) {
+      toast.error('Points must be a positive integer.');
+      return false;
+    }
+
     return true;
   };
-  
-  const handleAddQuestion = () => {
-    if (!validateCurrentQuestion()) return;
-    setQuestions([...questions, currentQuestion]);
+
+
+// hard coding labels cuz yes
+const Labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+
+const handleQuestionTypeChange = (value) => {
+  setCurrentQuestion({
+    ...currentQuestion,
+    type: value,
+    options: (value === 'multiple-choice' || value === 'checkboxes' || value === 'dropdown')
+      ? [{ label: 'A', value: '' }] 
+      : [],
+    correctOptions: [], 
+    validation: { 
+      required: false,
+      regex: null,
+      errorMessage: ''
+    }
+  });
+};
+
+const initializeOptions = (options) => {
+  return options.map((option, index) => ({
+    ...option,
+    label: Labels[index] || `Option ${index + 1}`
+  }));
+};
+
+const handleOptionChange = (index, value) => {
+  setCurrentQuestion(prev => ({
+    ...prev,
+    options: prev.options.map((option, i) => 
+      i === index 
+        ? { ...option, value: value.trim(), label: Labels[i] }
+        : option
+    )
+  }));
+};
+
+useEffect(() => {
+  if (currentQuestion.options.length > 0) {
+    setCurrentQuestion(prev => ({
+      ...prev,
+      options: initializeOptions(prev.options)
+    }));
+  }
+}, []); 
+
+const addOption = () => {
+  setCurrentQuestion(prev => {
+    const newIndex = prev.options.length;
+    const label = newIndex < Labels.length 
+      ? Labels[newIndex] 
+      : `Option ${newIndex + 1}`;
+
+    return {
+      ...prev,
+      options: [
+        ...prev.options,
+        { label, value: '' }
+      ]
+    };
+  });
+};
+
+const removeOption = (index) => {
+  setCurrentQuestion(prev => ({
+    ...prev,
+    options: prev.options
+      .filter((_, i) => i !== index)
+      .map((option, i) => ({ 
+        ...option, 
+        label: Labels[i] 
+      }))
+  }));
+};
+
+const handleAddQuestion = async () => {
+  if (!validateCurrentQuestion()) return;
+    
+  try {
+    const questionData = {
+      ...currentQuestion,
+      options: currentQuestion.options.map((option, index) => ({
+        ...option,
+        label: Labels[index]
+      })),
+      correctOptions: formatCorrectOptions(currentQuestion.type, currentQuestion.correctOptions),
+      validation: {
+        required: currentQuestion.mandatory,
+        regex: null,
+        errorMessage: 'This field is required'
+      },
+      quizId
+    };
+    
+    const response = await addQuestion(questionData);
+    setQuestions(prev => [...prev, response.data]);
     resetCurrentQuestion();
     toast.success('Question added successfully!');
+  } catch (error) {
+    toast.error('Failed to add question: ' + (error.response?.data?.message || error.message));
+  }
+};
+  const formatCorrectOptions = (type, value) => {
+    switch (type) {
+      case 'multiple-choice':
+        return typeof value === 'string' ? value.split(',').map(v => v.trim()) : Array.isArray(value) ? value : [value];
+      case 'true-false':
+        return [value.toLowerCase() === 'true'];
+      case 'short-answer':
+        return [value];
+      default:
+        return [];
+    }
   };
-  
-  const handleCreateQuiz = () => {
+
+  const handleCreateQuiz = async () => {
     try {
-      const quizCode = "TESTCODE";
-      setGeneratedCode(quizCode);
-      setStep(3);
+      const quizData = {
+        title: quizTitle,
+        description: quizDesc,
+        sections: [{
+          title: 'Default Section',
+          description: 'Default section description',
+          questions: []
+        }]
+      };
+      
+      const response = await createQuiz(quizData);
+      setQuizId(response.data._id);
+      setGeneratedCode(response.data.quizCode);
       toast.success('Quiz created successfully!');
-    } catch (err) {
-      toast.error('Failed to create quiz!', err);
+      return response.data._id;
+    } catch (error) {
+      toast.error('Failed to create quiz: ' + (error.response?.data?.message || error.message));
+      return null;
+    }
+  };
+
+  const handleCreateAndGoNext = async () => {
+    const createdQuizId = await handleCreateQuiz();
+    if (createdQuizId) {
+      handleGoNext();
     }
   };
   
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedCode);
     toast.success('Copied to clipboard!');
   };
-  
+
   const renderStep = () => {
     switch (step) {
       case 0:
         return (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className='flex flex-row justify-end'>
-              <Button variant="ghost" onClick={handleGoNext}> <ArrowRight size={20} /> </Button>
+              <Button variant="ghost" onClick={handleGoNext}><ArrowRight size={20} /></Button>
             </div>
             <CardHeader>
               <CardTitle>Create Your Quiz</CardTitle>
             </CardHeader>
             <CardContent>
               <Input
-                placeholder="Enter quiz title"
+                placeholder="Quiz title"
                 value={quizTitle}
                 onChange={(e) => setQuizTitle(e.target.value)}
+                className="mb-2"
+              />
+              <Input
+                placeholder="Quiz description"
+                value={quizDesc}
+                onChange={(e) => setQuizDesc(e.target.value)}
                 className="mb-4"
               />
-              <Button onClick={handleGoNext}>Add Questions</Button>
+              <Button onClick={handleCreateAndGoNext}>Add Questions</Button>
             </CardContent>
           </motion.div>
         );
-  
+
       case 1:
         return (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className='flex flex-row justify-end'>
-              <Button variant="ghost" onClick={handleGoBack}> <ArrowLeft size={20} /> </Button>
-              <Button variant="ghost" onClick={handleGoNext}> <ArrowRight size={20} /> </Button>
+              <Button variant="ghost" onClick={handleGoBack}><ArrowLeft size={20} /></Button>
+              <Button variant="ghost" onClick={handleGoNext}><ArrowRight size={20} /></Button>
             </div>
-            <CardHeader className="flex items-center space-x-2">
+            <CardHeader>
               <CardTitle>Add Question</CardTitle>
             </CardHeader>
             <CardContent>
-              <Select onValueChange={(value) => setCurrentQuestion({ ...currentQuestion, type: value })}>
+              <Select onValueChange={handleQuestionTypeChange}>
                 <SelectTrigger className="mb-4">
                   <SelectValue placeholder="Select question type" />
                 </SelectTrigger>
@@ -149,58 +303,54 @@ const CreateQuiz = () => {
                   <SelectItem value="multiple-choice">Multiple Choice</SelectItem>
                   <SelectItem value="true-false">True/False</SelectItem>
                   <SelectItem value="short-answer">Short Answer</SelectItem>
+                  {/* <SelectItem value="checkboxes">Checkboxes</SelectItem> */}
+                  {/* <SelectItem value="dropdown">Dropdown</SelectItem> */}
                 </SelectContent>
               </Select>
               <Input
                 placeholder="Enter question"
-                value={currentQuestion.question}
-                onChange={(e) => setCurrentQuestion({ ...currentQuestion, question: e.target.value })}
+                value={currentQuestion.questionText}
+                onChange={(e) => setCurrentQuestion({ ...currentQuestion, questionText: e.target.value })}
                 className="mb-4"
               />
-              {currentQuestion.type === 'multiple-choice' && (
-                <>
+              {['multiple-choice', 'checkboxes', 'dropdown'].includes(currentQuestion.type) && (
+                <div>
                   {currentQuestion.options.map((option, index) => (
-                    <Input
-                      key={index}
-                      placeholder={`Option ${index + 1}`}
-                      value={option}
-                      onChange={(e) => {
-                        const newOptions = [...currentQuestion.options];
-                        newOptions[index] = e.target.value;
-                        setCurrentQuestion({ ...currentQuestion, options: newOptions });
-                      }}
-                      className="mb-2"
-                    />
+                    <div key={index} className='flex flex-row m-2 mb-1'>
+                      <span className="mt-2 mr-3">{option.label}</span> 
+                      <Input
+                        type="text"
+                        placeholder="Option Value"
+                        value={option.value}
+                        onChange={(e) => handleOptionChange(index, e.target.value)}
+                        className="mt-2"
+                      />
+                      <Button variant="destructive" className="m-2" onClick={() => removeOption(index)}>Remove</Button>
+                    </div>
                   ))}
-                  <Button
-                    onClick={() => setCurrentQuestion({ ...currentQuestion, options: [...currentQuestion.options, ''] })}
-                    className="mb-4"
-                  >
-                    Add Option
-                  </Button>
+                  <Button onClick={addOption}>Add Option</Button>
                   <Input
                     placeholder="Enter correct answer"
-                    value={currentQuestion.answer}
-                    onChange={(e) => setCurrentQuestion({ ...currentQuestion, answer: e.target.value })}
-                    className="mb-4"
+                    value={currentQuestion.correctOptions}
+                    onChange={(e) => setCurrentQuestion({ ...currentQuestion, correctOptions: e.target.value })}
+                    className="mb-4 mt-2"
                   />
-                </>
+                </div>
               )}
+
               {(currentQuestion.type === 'short-answer' || currentQuestion.type === 'true-false') && (
                 <Input
                   placeholder="Enter correct answer"
-                  value={currentQuestion.answer}
-                  onChange={(e) => setCurrentQuestion({ ...currentQuestion, answer: e.target.value })}
+                  value={currentQuestion.correctOptions}
+                  onChange={(e) => setCurrentQuestion({ ...currentQuestion, correctOptions: e.target.value })}
                   className="mb-4"
                 />
               )}
               <div className="flex items-center space-x-2 mb-4">
                 <Checkbox
                   id="mandatory"
-                  checked={currentQuestion.isMandatory}
-                  onCheckedChange={(checked) =>
-                    setCurrentQuestion({ ...currentQuestion, isMandatory: checked })
-                  }
+                  checked={currentQuestion.mandatory}
+                  onCheckedChange={(checked) => setCurrentQuestion({ ...currentQuestion, mandatory: checked })}
                 />
                 <Label htmlFor="mandatory">Mandatory question</Label>
               </div>
@@ -209,89 +359,64 @@ const CreateQuiz = () => {
                 <Input
                   id="points"
                   type="number"
-                  min="0"
+                  min="1"
                   value={currentQuestion.points}
-                  onChange={(e) => setCurrentQuestion({ ...currentQuestion, points: parseInt(e.target.value) || 0 })}
+                  onChange={(e) => setCurrentQuestion({
+                    ...currentQuestion,
+                    points: Math.max(1, parseInt(e.target.value) || 1)
+                  })}
                   className="w-20"
                 />
               </div>
             </CardContent>
-            <CardFooter>
-              <Button onClick={handleAddQuestion} className="mr-2">Add Question</Button>
+            <CardFooter className="flex flex-col items-start">
+              <div>
+              <Button onClick={handleAddQuestion} className="mb-4 mr-2">Add Question</Button>
               <Button onClick={handleGoNext}>Review and Create</Button>
+              </div>
+
+              <div className="w-full space-y-2">
+                {questions.map((q, index) => (
+                  <div key={index} className="flex items-center justify-between w-full p-2 bg-gray-50 rounded">
+                    <span className="truncate mr-2">{q.questionText}</span>
+                    <Button variant="destructive" onClick={() => handleRemoveQuestion(index)}>Remove</Button>
+                  </div>
+                ))}
+              </div>
+
             </CardFooter>
           </motion.div>
         );
-  
+
       case 2:
         return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <CardHeader className="flex items-center space-x-2">
-              <CardTitle>Please Review Your Quiz Carefully</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="border border-gray-300 shadow-sm p-4 mb-4 rounded-lg bg-gray-100">
-              <p className='text-lg font-bold px-4'>{`Title: ${quizTitle}`}</p>
-              </div>
-            {questions.map((question, index) => (
-              <div key={index} className="border border-gray-300 shadow-sm p-4 mb-4 rounded-lg bg-gray-100">
-                <h4 className="text-lg font-semibold mb-2">{`Question ${index + 1}: ${question.question}`}</h4>
-                <label className="text-sm text-violet-900 mb-2 rounded-lg p-[1px] px-1 bg-gray-200">{`${question.type}`}</label>
-                
-                {question.type === 'multiple-choice' && (
-                  <ul className="list-disc list-inside ml-4 mb-2">
-                    {question.options.map((option, idx) => (
-                      <li key={idx} className="text-sm text-gray-700">{option}</li>
-                    ))}
-                  </ul>
-                )}
-                
-                <p className="text-sm font-medium text-green-600 mb-2">{`Correct Answer: ${question.answer}`}</p>
-                  <Button 
-                    variant="destructive" 
-                    onClick={() => handleRemoveQuestion(index)} 
-                    className="text-whiteborder-red-600 bg-red-400 hover:bg-red-300 mr-2"
-                  >
-                    Remove
-                  </Button>
-              </div>
-            ))}
+          <ReviewQuiz 
+              quizId={quizId}
+              quizTitle={quizTitle} 
+              setStep={setStep}
+              step={step} questions={questions} setQuestions={setQuestions}
+          />
+        );
 
-            </CardContent>
-            <CardFooter>
-              <Button onClick={()=>setStep(1)} className="mr-2">Add Questions</Button>
-              <Button onClick={handleCreateQuiz} className="mr-2">Generate Code</Button>
-            </CardFooter>
-          </motion.div>
-        );
-  
-      case 3:
-        return (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className='flex flex-row justify-end'>
-              <Button variant="ghost" onClick={()=>setStep(2)}> <ArrowLeft size={20} /> </Button>
-            </div>
-            <CardHeader className="flex items-center space-x-2">
-              <CardTitle>Generated Quiz Code</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <pre className="bg-gray-100 p-4 rounded-md overflow-x-auto">
-                <code>{generatedCode}</code>
-              </pre>
-              <Button onClick={copyToClipboard} className="mt-4">Copy to Clipboard</Button>
-            </CardContent>
-            <CardFooter>
-              <Button onClick={handleCreateQuiz} className="mr-2">Generate Code</Button>
-            </CardFooter>
-          </motion.div>
-        );
-  
+        case 3:
+          return (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <CardHeader>
+                <CardTitle>Your Quiz Code</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className='p-4 bg-gray-100 rounded-lg mt-2 mb-2'>
+                <p>{generatedCode}</p>
+                </div>
+                <Button onClick={copyToClipboard}>Copy Code</Button>
+              </CardContent>
+            </motion.div>
+          );
+
       default:
         return null;
     }
   };
-  
-  
 
   return (
     <div className="h-screen w-screen md:justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">

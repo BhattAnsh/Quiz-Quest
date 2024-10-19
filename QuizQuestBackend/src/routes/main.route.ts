@@ -4,7 +4,7 @@ import authRouter from "./userHandling/register.route";
 import userRouter from "./userHandling/user.route";
 
 export const setUpRoutes = async (app: any) => {
-  app.use("/auth", authRouter);
-  app.use("/user", userRouter);
-  app.use("/quiz", questionRouter, quizRouter);
+  app.use("/api/v1/auth", authRouter);
+  app.use("/api/v1/user", userRouter);
+  app.use("/api/v1/quiz", questionRouter, quizRouter);
 };

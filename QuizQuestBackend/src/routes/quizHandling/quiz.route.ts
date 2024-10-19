@@ -16,6 +16,6 @@ quizRouter.get("/getAllQuizzes", getAllQuizzes);
 quizRouter.get("/getQuiz/:id", getQuizById);
 quizRouter.put("/updateQuiz/:id", updateQuiz);
 quizRouter.delete("/deleteQuiz/:id", deleteQuiz);
-quizRouter.post("publish/:quizId", publishQuiz);
+quizRouter.post("/publish/:quizId", publishQuiz);
 
 export default quizRouter;

@@ -24,6 +24,7 @@ interface IQuestion extends Document {
     | "checkboxes"
     | "dropdown"
     | "date"
+    | "true-false"
     | "time";
   options: { label: string; value: string }[]; // Options for choice-based questions
   correctOptions?: string[]; // For quiz questions with correct answers
@@ -59,6 +60,7 @@ const questionSchema: Schema<IQuestion> = new mongoose.Schema({
       "dropdown",
       "date",
       "time",
+    "true-false",
     ],
   },
   options: {
@@ -203,7 +205,7 @@ const quizSchema: Schema<IQuiz> = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["active", "inactive", "draft", "completed", "archived"],
+    enum: ["active", "inactive", "draft", "completed", "archived", "published"],
     default: "draft",
   },
 });

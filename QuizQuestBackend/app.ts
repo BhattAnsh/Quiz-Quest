@@ -7,6 +7,15 @@ import connectDB from "./src/config/db";
 import { startServer } from "./server";
 
 require("dotenv").config();
+// cors
+app.use(
+  cors({
+    origin: process.env.ORIGIN || "http://localhost:5173",
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
 
 // body parser
 app.use(express.json({ limit: "50mb" }));
@@ -14,13 +23,7 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
-// cors
-app.use(
-  cors({
-    origin: process.env.ORIGIN,
-    // credentials: true
-  })
-);
+
 
 // testing api
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
