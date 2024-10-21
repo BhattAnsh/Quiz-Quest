@@ -130,7 +130,8 @@
 │   │       └── home.jsx
 │   ├── tailwind.config.js
 │   └── vite.config.js
-└── README.md
+├── README.md
+└── repo_structure.txt
 ```
 <!-- END_STRUCTURE -->
 
