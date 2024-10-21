@@ -32,6 +32,11 @@
 - Express.js
 - MongoDB
 
+## Project Structure
+
+<!-- START_STRUCTURE -->
+<!-- END_STRUCTURE -->
+
 ## 🛠️ Installation
 
 1. **Clone the repository:**
