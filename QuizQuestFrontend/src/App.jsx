@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import FloatingNav from "./components/navbar";
 import Login from "./pages/Login"
+import Signup from "./pages/Signup";
 import {
   IoMdHome,
   IoMdAddCircle,
@@ -15,6 +16,7 @@ import CreateQuiz from "./pages/create";
 import ProfileCard from "./components/ProfileCard";
 import Footer from "./components/Footer";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Toaster } from "react-hot-toast";
 
 const navItems = [
   {
@@ -54,7 +56,7 @@ const routeDefinitions = [
   { path: "/join", element: <div>Join Page</div> }, 
   { path: "/explore", element: <div>Explore Page</div> },
   { path: "/login", element: <Login /> }, 
-  { path: "/signup", element: <div>Signup Page</div> }, 
+  { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
 ];
 
@@ -81,6 +83,7 @@ function App() {
 const WrappedApp = () => (
   <BrowserRouter>
     <App />
+    <Toaster />
   </BrowserRouter>
 );
 
