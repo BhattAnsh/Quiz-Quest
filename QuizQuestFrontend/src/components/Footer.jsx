@@ -11,7 +11,7 @@ export default function Footer() {
           "linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 10, 0, 0.98) 85%, rgba(0, 50, 0, 0.9) 95%, rgba(0, 80, 0, 0.4) 100%)",
       }}
     >
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-start md:items-center px-6 space-y-6 md:space-y-0">
+      <div className="container mx-auto flex flex-col md:flex-row justify-around items-start md:items-center px-6 space-y-6 md:space-y-0 w-[90%]">
         {/* Left Section */}
         <div className="footer-logo mb-6 md:mb-0 flex flex-col items-start md:items-start">
           <h2 className="text-3xl font-bold">
@@ -50,10 +50,10 @@ export default function Footer() {
         </div>
 
         {/* Middle Section: Links */}
-        <div className="footer-links flex flex-col md:flex-row gap-10 md:gap-20 mb-6 md:mb-0">
+        <div className="footer-links flex flex-col md:flex-row gap-10 md:gap-[200px] mb-6 md:mb-0">
           {/* Features Section */}
           <div className="platform flex-1 flex flex-col">
-            <h3 className="font-bold text-lg mb-2">Features</h3>
+            <h3 className="font-bold text-[25px] mb-1">Features</h3>
             <ul className="space-y-2">
               {[
                 "Create and Manage Quizzes",
@@ -75,7 +75,7 @@ export default function Footer() {
 
           {/* About Section */}
           <div className="about flex-1 flex flex-col">
-            <h3 className="font-bold text-lg mb-2">About</h3>
+            <h3 className="font-bold text-[25px] mb-2">About</h3>
             <ul className="space-y-2">
               {["Team", "Partners", "Contact Us", "FAQs", "Blog"].map((about) => (
                 <li key={about}>
