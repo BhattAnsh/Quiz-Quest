@@ -129,6 +129,7 @@ https://quiz-quest-zeta.vercel.app/
 │   │   ├── main.jsx
 │   │   └── pages/
 │   │       ├── Login.jsx
+│   │       ├── Signup.jsx
 │   │       ├── create.jsx
 │   │       └── home.jsx
 │   ├── tailwind.config.js
