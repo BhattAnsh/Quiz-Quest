@@ -8,7 +8,7 @@ export default function Footer() {
       className={cn("text-white py-8 shadow-lg")}
       style={{
         background:
-          "linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 10, 0, 0.98) 85%, rgba(0, 50, 0, 0.9) 95%, rgba(0, 80, 0, 0.4) 100%)",
+          "linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 10, 0, 0.98) 85%, rgba(0, 50, 0, 0.9) 95%",
       }}
     >
       <div className="container mx-auto flex flex-col md:flex-row justify-around items-start md:items-center px-6 space-y-6 md:space-y-0 w-[90%]">
@@ -84,6 +84,10 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <div className="flex flex-col justify-center space-y-2">
+              <Link to="/privacy-policy" className="hover:text-[#cff466] transition-colors duration-300">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="hover:text-[#cff466] transition-colors duration-300">Terms of Service</Link>
+            </div>
             </ul>
           </div>
         </div>
@@ -97,12 +101,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#cff466] mt-6 pt-4">
-        <div className="flex justify-center space-x-4">
-          <Link to="/privacy-policy" className="text-sm hover:text-[#cff466] transition-colors duration-300">Privacy Policy</Link>
-          <Link to="/terms-of-service" className="text-sm hover:text-[#cff466] transition-colors duration-300">Terms of Service</Link>
-        </div>
-        <div className="copyright-tag text-center text-sm mt-4">
+      <div className="border-t border-[#cff466] mt-6 pt-4 flex gap-4 items-center justify-center">
+        
+        <div className="copyright-tag text-center text-sm ">
           &copy; {new Date().getFullYear()} QuizQuest. All rights reserved.
         </div>
       </div>
