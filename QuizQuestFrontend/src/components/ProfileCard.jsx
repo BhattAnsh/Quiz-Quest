@@ -36,8 +36,8 @@ function ProfileCard() {
   </div>
 </div>
 
-    <div className="absolute  px-4 py-2 ml-2  bg-[#1a2713] -bottom-10 left-32 border-2 border-[#1A1A19] overflow-hidden rounded-xl ">
-     <h1 className='text-xs flex gap-1 items-center text-gray-300 hover:text-white'><BsFillPlusCircleFill/><span >Add Status</span></h1>
+    <div className="absolute  px-4 py-2 ml-2  bg-[#1a2713] -bottom-10 left-32 border-2 border-[#1A1A19] overflow-hidden rounded-xl hover:cursor-pointer">
+     <h1 className='text-xs flex gap-1 items-center text-gray-300 hover:text-white '><BsFillPlusCircleFill/><span >Add Status</span></h1>
     </div>
     <div className="absolute rounded-full w-4 h-4 bg-[#1a2713] -bottom-3 left-[9.5em]  border-2 border-[#1a2713] overflow-hidden">
     </div>
