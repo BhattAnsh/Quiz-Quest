@@ -16,8 +16,8 @@ import CreateQuiz from "./pages/create";
 import ProfileCard from "./components/ProfileCard";
 import Footer from "./components/Footer";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Error404 from "./pages/Error404";
 import { Toaster } from "react-hot-toast";
-
 const navItems = [
   {
     name: "HOME",
@@ -58,6 +58,8 @@ const routeDefinitions = [
   { path: "/login", element: <Login /> }, 
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
+  { path: "*", element: <Error404/> }, 
+  
 ];
 
 function App() {
