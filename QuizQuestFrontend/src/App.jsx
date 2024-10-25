@@ -17,6 +17,7 @@ import ProfileCard from "./components/ProfileCard";
 import Footer from "./components/Footer";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Toaster } from "react-hot-toast";
+import ProfileDashboard from "./components/ProfileDashboard";
 
 const navItems = [
   {
@@ -58,6 +59,7 @@ const routeDefinitions = [
   { path: "/login", element: <Login /> }, 
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
+  { path: "/dashboard", element: <ProfileDashboard/> }, 
 ];
 
 function App() {
