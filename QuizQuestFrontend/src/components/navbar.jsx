@@ -7,11 +7,11 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function FloatingNav({ navItems, className }) {
   const { scrollYProgress } = useScroll();
-
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
@@ -74,7 +74,7 @@ export default function FloatingNav({ navItems, className }) {
           <button className="relative text-sm bg-[#cff466] text-black w-fit px-10 py-2 rounded-full">
             <span>EXPLORE</span>
           </button>
-          <button className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full">
+          <button className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full" onClick={()=> navigate("/login")}>
             <span>LOG IN</span>
           </button>
         </div>

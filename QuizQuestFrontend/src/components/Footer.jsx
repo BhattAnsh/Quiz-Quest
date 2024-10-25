@@ -8,10 +8,10 @@ export default function Footer() {
       className={cn("text-white py-8 shadow-lg")}
       style={{
         background:
-          "linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 10, 0, 0.98) 85%, rgba(0, 50, 0, 0.9) 95%, rgba(0, 80, 0, 0.4) 100%)",
+          "linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 10, 0, 0.98) 85%, rgba(0, 50, 0, 0.9) 95%",
       }}
     >
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-start md:items-center px-6 space-y-6 md:space-y-0">
+      <div className="container mx-auto flex flex-col md:flex-row justify-around items-start md:items-center px-6 space-y-6 md:space-y-0 w-[90%]">
         {/* Left Section */}
         <div className="footer-logo mb-6 md:mb-0 flex flex-col items-start md:items-start">
           <h2 className="text-3xl font-bold">
@@ -50,10 +50,10 @@ export default function Footer() {
         </div>
 
         {/* Middle Section: Links */}
-        <div className="footer-links flex flex-col md:flex-row gap-10 md:gap-20 mb-6 md:mb-0">
+        <div className="footer-links flex flex-col md:flex-row gap-10 md:gap-[200px] mb-6 md:mb-0">
           {/* Features Section */}
           <div className="platform flex-1 flex flex-col">
-            <h3 className="font-bold text-lg mb-2">Features</h3>
+            <h3 className="font-bold text-[25px] mb-1">Features</h3>
             <ul className="space-y-2">
               {[
                 "Create and Manage Quizzes",
@@ -75,7 +75,7 @@ export default function Footer() {
 
           {/* About Section */}
           <div className="about flex-1 flex flex-col">
-            <h3 className="font-bold text-lg mb-2">About</h3>
+            <h3 className="font-bold text-[25px] mb-2">About</h3>
             <ul className="space-y-2">
               {["Team", "Partners", "Contact Us", "FAQs", "Blog"].map((about) => (
                 <li key={about}>
@@ -84,6 +84,10 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <div className="flex flex-col justify-center space-y-2">
+              <Link to="/privacy-policy" className="hover:text-[#cff466] transition-colors duration-300">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="hover:text-[#cff466] transition-colors duration-300">Terms of Service</Link>
+            </div>
             </ul>
           </div>
         </div>
@@ -97,12 +101,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#cff466] mt-6 pt-4">
-        <div className="flex justify-center space-x-4">
-          <Link to="/privacy-policy" className="text-sm hover:text-[#cff466] transition-colors duration-300">Privacy Policy</Link>
-          <Link to="/terms-of-service" className="text-sm hover:text-[#cff466] transition-colors duration-300">Terms of Service</Link>
-        </div>
-        <div className="copyright-tag text-center text-sm mt-4">
+      <div className="border-t border-[#cff466] mt-6 pt-4 flex gap-4 items-center justify-center">
+        
+        <div className="copyright-tag text-center text-sm ">
           &copy; {new Date().getFullYear()} QuizQuest. All rights reserved.
         </div>
       </div>
