@@ -40,6 +40,14 @@
   color: #888;
 } */
 
+.lable-style {
+  @apply text-[14px] text-richblack-5;
+}
+
+.form-style {
+  @apply rounded-lg bg-richblack-700 p-3 text-[16px] leading-[24px] text-richblack-5 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-richblack-400 focus:outline-none;
+}
+
 .sphere-card {
   background: rgb(72,255,59);
   background: radial-gradient(circle, rgba(72,255,59,0.4789565484396884) 0%, rgba(180,180,181,0.23245794899991246) 35%);

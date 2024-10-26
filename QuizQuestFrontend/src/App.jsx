@@ -18,6 +18,7 @@ import Footer from "./components/Footer";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Error404 from "./pages/Error404";
 import { Toaster } from "react-hot-toast";
+import ContactUs from "./pages/ContactUs"
 const navItems = [
   {
     name: "HOME",
@@ -46,6 +47,11 @@ const navItems = [
     link: "/explore",
     icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
+  {
+    name: "CONTACT",
+    link: "/contact",
+    icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
+  }
 ];
 
 // Route definitions
@@ -58,6 +64,7 @@ const routeDefinitions = [
   { path: "/login", element: <Login /> }, 
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
+  { path: "/contact", element: <ContactUs />},
   { path: "*", element: <Error404/> }, 
   
 ];
