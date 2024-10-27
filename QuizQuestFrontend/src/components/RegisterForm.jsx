@@ -118,6 +118,28 @@ const RegisterForm = ({ border }) => {
 				)}
 			</div>
 
+			{/* College-Address */}
+			<div className="flex flex-col gap-2">
+				<label
+					htmlFor="college"
+					className="lable-style">
+					College / School name:
+				</label>
+				<input
+					type="text"
+					name="college"
+					id="college"
+					placeholder="Enter College/School name"
+					className="form-style"
+					{...register("college", { required: true })}
+				/>
+				{errors.college && (
+					<span className="-mt-1 text-[12px] text-yellow-100">
+						Please enter your College/School name.
+					</span>
+				)}
+			</div>
+
 			<div className="flex flex-col gap-2">
 				<label
 					htmlFor="phonenumber"
