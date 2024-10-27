@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import FloatingNav from "./components/navbar";
-import Login from "./pages/Login"
+import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import {
   IoMdHome,
@@ -15,9 +15,10 @@ import CreateQuiz from "./pages/create";
 
 import ProfileCard from "./components/ProfileCard";
 import Footer from "./components/Footer";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import Error404 from "./pages/Error404";
 import { Toaster } from "react-hot-toast";
+import About from "./pages/About";
 const navItems = [
   {
     name: "HOME",
@@ -53,13 +54,12 @@ const routeDefinitions = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <div>About Page</div> },
   { path: "/create", element: <CreateQuiz /> },
-  { path: "/join", element: <div>Join Page</div> }, 
+  { path: "/join", element: <div>Join Page</div> },
   { path: "/explore", element: <div>Explore Page</div> },
-  { path: "/login", element: <Login /> }, 
-  { path: "/signup", element: <Signup /> }, 
-  { path: "/profile", element: <ProfileCard/> }, 
-  { path: "*", element: <Error404/> }, 
-  
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/profile", element: <ProfileCard /> },
+  { path: "*", element: <Error404 /> },
 ];
 
 function App() {
@@ -76,6 +76,7 @@ function App() {
     <div className="p-0 m-0">
       {shouldDisplayNavbar && <FloatingNav navItems={navItems} />}
       {routing}
+      <About />
       <Footer></Footer>
     </div>
   );
