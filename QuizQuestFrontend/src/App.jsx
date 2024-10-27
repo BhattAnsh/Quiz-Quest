@@ -19,6 +19,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Error404 from "./pages/Error404";
 import { Toaster } from "react-hot-toast";
 import ContactUs from "./pages/ContactUs"
+import ProfileDashboard from "./components/ProfileDashboard";
+
 const navItems = [
   {
     name: "HOME",
@@ -65,6 +67,7 @@ const routeDefinitions = [
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
   { path: "/contact", element: <ContactUs />},
+  { path: "/dashboard", element: <ProfileDashboard/> }, 
   { path: "*", element: <Error404/> }, 
   
 ];
