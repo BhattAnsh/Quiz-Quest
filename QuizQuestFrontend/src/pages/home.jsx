@@ -11,7 +11,11 @@ export default function Home() {
           transition={{ duration: 1 }}
           className="flex flex-col justify-center items-center h-full w-full"
         >
-          <img src={svg} alt="spotlight" className="absolute top-44 md:top-0 scale-150 rotate-90 md:rotate-0 md:scale-100  md:left-0 " />
+          <img
+            src={svg}
+            alt="spotlight"
+            className="fixed top-44 md:top-0 scale-150 rotate-90 md:rotate-0 md:scale-100  md:left-0 "
+          />
           <div className="relative h-screen w-[100vw] ">
             <div className="flex items-center h-full w-full pl-7 md:absolute md:left-60 mt-10 ">
               <div className="flex flex-col gap-6 w-full md:w-1/2 ">
