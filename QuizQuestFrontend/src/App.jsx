@@ -20,6 +20,7 @@ import Error404 from "./pages/Error404";
 import { Toaster } from "react-hot-toast";
 import ContactUs from "./pages/ContactUs"
 import ProfileDashboard from "./components/ProfileDashboard";
+import Registration from "./pages/Registration";
 
 const navItems = [
   {
@@ -62,7 +63,7 @@ const routeDefinitions = [
   { path: "/about", element: <div>About Page</div> },
   { path: "/create", element: <CreateQuiz /> },
   { path: "/join", element: <div>Join Page</div> }, 
-  { path: "/explore", element: <div>Explore Page</div> },
+  { path: "/explore", element: <Registration /> },
   { path: "/login", element: <Login /> }, 
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
