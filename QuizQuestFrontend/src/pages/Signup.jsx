@@ -30,7 +30,30 @@ function Signup() {
         if (formData.password !== formData.cpassword) {
             toast.error("Incorrect Password!");
             return;
-        }
+		}
+		
+		const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+		// Password validation regex (at least 8 characters, one uppercase, one lowercase, one digit, one special character)
+		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+		
+
+		if (!formData.name || !formData.email || !formData.password) {
+			toast.error("Please fill in all fields");
+			return;
+		}
+		
+		if (!emailRegex.test(formData.email)) {
+			toast.error("Please enter valid email");
+			return;
+		}
+		
+		if (!passwordRegex.test(formData.password)) {
+			toast.error(
+				"Password having at least 8 characters, one uppercase, one lowercase, one digit, one special character"
+			);
+			return;
+		}
+
         toast.success("Signup successfully");
         navigate("/");
 		console.log(formData);
