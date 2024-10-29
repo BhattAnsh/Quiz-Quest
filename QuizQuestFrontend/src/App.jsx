@@ -21,6 +21,7 @@ import { Toaster } from "react-hot-toast";
 import ContactUs from "./pages/ContactUs"
 import ProfileDashboard from "./components/ProfileDashboard";
 import Registration from "./pages/Registration";
+import Faqs from "./components/Faqs";
 
 const navItems = [
   {
@@ -68,7 +69,8 @@ const routeDefinitions = [
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
   { path: "/contact", element: <ContactUs />},
-  { path: "/dashboard", element: <ProfileDashboard/> }, 
+  { path: "/dashboard", element: <ProfileDashboard /> }, 
+  {path:"/faqs", element: <Faqs />},
   { path: "*", element: <Error404/> }, 
   
 ];
@@ -78,7 +80,7 @@ function App() {
   const routing = useRoutes(routeDefinitions);
 
   // Define routes where the navbar should be hidden
-  const routesWithoutNavbar = ["/login", "/signup"];
+  const routesWithoutNavbar = ["/login", "/signup", "/faqs"];
 
   // Check if the current route is in the routesWithoutNavbar array
   const shouldDisplayNavbar = !routesWithoutNavbar.includes(location.pathname);

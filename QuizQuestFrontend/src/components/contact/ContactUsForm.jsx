@@ -18,6 +18,24 @@ const ContactUsForm = ({ border }) => {
 
 	const submitContactForm = async (data) => {
 		console.log("Form Data - ", data);
+		const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+		console.log(data.email)
+		if (!data.firstname || !data.email) {
+			toast.error("Please fill in all fields");
+			return;
+		}
+
+		if (!emailRegex.test(data.email)) {
+			toast.error("Please enter valid email");
+			return;
+		}
+
+		if (data.message.length < 4) {
+			toast.error("Please enter valid message")
+			return;
+		}
+
+		
 		const toastId = toast.loading("Loading...");
         setTimeout(() => {
             toast.dismiss(toastId);
