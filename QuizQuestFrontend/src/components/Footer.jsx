@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils"; // Ensure this utility works as expected
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -34,9 +35,9 @@ export default function Footer() {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#cff466] transition-colors duration-300"
+              className="hover:text-[#cff466] transition-colors duration-300 mt-1"
             >
-              <i className="fab fa-twitter fa-lg"></i>
+               <FaXTwitter className="w-[15px] h-[15px]" />
             </a>
             <a
               href="https://instagram.com"
