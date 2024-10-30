@@ -22,6 +22,7 @@ import ContactUs from "./pages/ContactUs"
 import ProfileDashboard from "./components/ProfileDashboard";
 import Registration from "./pages/Registration";
 import Faqs from "./components/Faqs";
+import RateUs from "./components/RateUs";
 
 const navItems = [
   {
@@ -71,6 +72,7 @@ const routeDefinitions = [
   { path: "/contact", element: <ContactUs />},
   { path: "/dashboard", element: <ProfileDashboard /> }, 
   {path:"/faqs", element: <Faqs />},
+  {path: "/rateUs", element: <RateUs />},
   { path: "*", element: <Error404/> }, 
   
 ];

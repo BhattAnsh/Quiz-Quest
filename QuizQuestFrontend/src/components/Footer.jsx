@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils"; // Ensure this utility works as expected
 import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <footer
       className={cn("text-white py-8 shadow-lg")}
@@ -94,11 +95,18 @@ export default function Footer() {
         </div>
 
         {/* Right Section: Contact */}
-        <div className="footer-contactus flex flex-col items-start">
+        <div>
+          <div className="footer-contactus flex flex-col items-start">
           <h2 className="text-lg font-bold ml-2">Contact Us</h2>
           <Link to="/contact" className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full mt-2 text-center">
             Get in Touch
           </Link>
+        </div>
+        <div className="footer-contactus flex flex-col items-start mt-4 cursor-pointer" onClick={() => navigate("/rateUs")}>
+          <div className="relative text-md font-semibold bg-[#cff466]  min-w-fit px-8 py-2 rounded-lg mt-2 text-center text-black ">
+              RateUs
+          </div>
+        </div>
         </div>
       </div>
 
