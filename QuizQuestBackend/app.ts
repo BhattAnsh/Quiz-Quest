@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { ErrorMiddleware } from "./src/middleware/error";
 import connectDB from "./src/config/db";
 import { startServer } from "./server";
+import contactUsRoute from "./src/routes/contact/contactUsRoute";
 
 require("dotenv").config();
 // cors
@@ -22,7 +23,7 @@ app.use(express.json({ limit: "50mb" }));
 
 // cookie parser
 app.use(cookieParser());
-
+app.use("/api/v1/reach", contactUsRoute);
 
 
 // testing api

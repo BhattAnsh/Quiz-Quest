@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import CountryCode from "../../data/countryCode.json"
 import { toast } from "react-hot-toast";
+import { apiConnector } from "@/services/apiConnector";
 
 const ContactUsForm = ({ border }) => {
 	const [loading, setLoading] = useState(false);
@@ -35,13 +36,24 @@ const ContactUsForm = ({ border }) => {
 			return;
 		}
 
-		
+		const url = import.meta.env.VITE_BASE_URL + "/reach/contact";
+		console.log("Form Data - ", data);
 		const toastId = toast.loading("Loading...");
-        setTimeout(() => {
-            toast.dismiss(toastId);
-    		toast.success("Message sent successfully!");
-		    setLoading(false);
-        }, 2000);
+		try {
+			setLoading(true);
+			const res = await apiConnector(
+				"POST",
+				url,
+				data
+			);
+			toast.success("Message sent successfully!");
+			console.log("Email Res - ", res);
+		} catch (error) {
+			console.log("ERROR MESSAGE - ", error.message);
+			setLoading(false);
+		}
+		toast.dismiss(toastId);
+		setLoading(false);
 	};
 
 
