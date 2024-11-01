@@ -31,7 +31,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="border-2 bg-[#CFF466] border-[#CFF466] rounded-lg py-2 text-center w-40 mt-1">
-                  <button className="text-[#1E5128] text-md">Create Now</button>
+                  <button onClick={handleCreateQuiz} className="text-[#1E5128] text-md">Create Now</button>
                 </div>
               </div>
 
