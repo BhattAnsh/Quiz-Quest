@@ -35,7 +35,6 @@ function Login() {
       console.log('Login successful:', response);
       sessionStorage.setItem('accessToken', response.accessToken);
       navigate("/");
-      
     } catch (error) {
       console.error('Error:', error);
       alert('Login failed. Please check your credentials.');
@@ -101,7 +100,7 @@ function Login() {
             {/* <p className="text-center text-[whitesmoke]">OR</p> */}
             <p className="text-center text-[whitesmoke]">
               Don't have an account?
-              <span className="text-[#aad1a9] cursor-pointer"> SignUp</span>
+              <span className="text-[#aad1a9] cursor-pointer" onClick={()=> navigate("/signup")}> SignUp</span>
             </p>
           </div>
 
