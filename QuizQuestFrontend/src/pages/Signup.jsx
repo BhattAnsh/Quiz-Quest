@@ -6,6 +6,8 @@ import googleImg from "../images/google-img.jpg";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Signup() {
 	const [formData, setFormData] = useState({
@@ -14,6 +16,8 @@ function Signup() {
 		password: "",
 		cpassword: "",
 	});
+	const [pass, setPass] = useState(false);
+	const [cpass, setCPass] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -96,29 +100,51 @@ function Signup() {
 							</div>
 							<div>
 								{/* <label htmlFor="password">Password:</label> */}
-								<Input
-									type="password"
-									id="password"
-									name="password"
-									value={formData.password}
-									onChange={handleChange}
-									placeholder="Password"
-									className="outline-none bg-[#0E1C1B] border-[1px] border-[#aad1a9] w-[300px] h-[45px] rounded-lg pl-[13px] placeholder-[#aad1a9]"
-									required
-								/>
+								<div className="flex items-center">
+									<Input
+										type={!pass ? "password" : "text"}
+										id="password"
+										name="password"
+										value={formData.password}
+										onChange={handleChange}
+										placeholder="Password"
+										className="outline-none bg-[#0E1C1B] border-[1px] border-[#aad1a9] w-[300px] h-[45px] rounded-lg pl-[13px] placeholder-[#aad1a9]"
+										required
+									/>
+									<div
+										className="absolute ml-[270px] h-auto w-auto cursor-pointer"
+										onClick={() => setPass(!pass)}>
+										{pass ? (
+											<FaEye className="h-[20px] w-[20px]" />
+										) : (
+											<FaEyeSlash className="h-[20px] w-[20px]" />
+										)}
+									</div>
+								</div>
 							</div>
 							<div>
 								{/* <label htmlFor="Email">Email:</label> */}
-								<Input
-									type="password"
-									id="cpassword"
-									name="cpassword"
-									value={formData.cpassword}
-									onChange={handleChange}
-									placeholder="Enter confirm password"
-									className="outline-none bg-[#0E1C1B] border-[1px] border-[#aad1a9] w-[300px] h-[45px] rounded-lg pl-[13px] placeholder-[#aad1a9]"
-									required
-								/>
+								<div className="flex items-center">
+									<Input
+										type={!cpass ? "password" : "text"}
+										id="cpassword"
+										name="cpassword"
+										value={formData.cpassword}
+										onChange={handleChange}
+										placeholder="Enter confirm password"
+										className="outline-none bg-[#0E1C1B] border-[1px] border-[#aad1a9] w-[300px] h-[45px] rounded-lg pl-[13px] placeholder-[#aad1a9]"
+										required
+									/>
+									<div
+										className="absolute ml-[270px] h-auto w-auto cursor-pointer"
+										onClick={() => setCPass(!cpass)}>
+										{cpass ? (
+											<FaEye className="h-[20px] w-[20px]" />
+										) : (
+											<FaEyeSlash className="h-[20px] w-[20px]" />
+										)}
+									</div>
+								</div>
 							</div>
 							<button
 								type="submit"
