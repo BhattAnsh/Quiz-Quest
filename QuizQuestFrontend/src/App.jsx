@@ -53,7 +53,7 @@ const navItems = [
   },
   {
     name: "CONTACT",
-    link: "/contact",
+    link: "/contact-us",
     icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
   }
 ];
