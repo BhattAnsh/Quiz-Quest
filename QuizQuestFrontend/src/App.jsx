@@ -68,7 +68,7 @@ const routeDefinitions = [
   { path: "/login", element: <Login /> }, 
   { path: "/signup", element: <Signup /> }, 
   { path: "/profile", element: <ProfileCard/> }, 
-  { path: "/contact", element: <ContactUs />},
+  { path: "/contact-us", element: <ContactUs />},
   { path: "/dashboard", element: <ProfileDashboard /> }, 
   {path:"/faqs", element: <Faqs />},
   { path: "*", element: <Error404/> }, 
