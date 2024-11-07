@@ -9,6 +9,7 @@ import {
   IoMdMail,
   IoMdPeople,
   IoMdSearch,
+  IoIosCall
 } from "react-icons/io";
 import Home from "./pages/home";
 import CreateQuiz from "./pages/create";
@@ -54,7 +55,7 @@ const navItems = [
   {
     name: "CONTACT",
     link: "/contact",
-    icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    icon: <IoIosCall className="h-4 w-4 text-neutral-500 dark:text-white" />,
   }
 ];
 
