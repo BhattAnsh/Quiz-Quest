@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import FloatingNav from "./components/navbar";
-import Login from "./pages/Login"
+import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import {
   IoMdHome,
@@ -15,13 +15,15 @@ import CreateQuiz from "./pages/create";
 
 import ProfileCard from "./components/ProfileCard";
 import Footer from "./components/Footer";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import Error404 from "./pages/Error404";
 import { Toaster } from "react-hot-toast";
-import ContactUs from "./pages/ContactUs"
+import ContactUs from "./pages/ContactUs";
 import ProfileDashboard from "./components/ProfileDashboard";
 import Registration from "./pages/Registration";
 import Faqs from "./components/Faqs";
+
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const navItems = [
   {
@@ -55,24 +57,37 @@ const navItems = [
     name: "CONTACT",
     link: "/contact",
     icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
-  }
+  },
 ];
+
+const google_client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+//Google oauth only works if we wrap the components with google oauth provider
+const GoogleLoginWrapper = () => (
+  <GoogleOAuthProvider clientId={google_client_id}>
+    <Login />
+  </GoogleOAuthProvider>
+);
+
+const GoogleSignUpWrapper = () => (
+  <GoogleOAuthProvider clientId={google_client_id}>
+    <Signup />
+  </GoogleOAuthProvider>
+);
 
 // Route definitions
 const routeDefinitions = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <div>About Page</div> },
   { path: "/create", element: <CreateQuiz /> },
-  { path: "/join", element: <div>Join Page</div> }, 
+  { path: "/join", element: <div>Join Page</div> },
   { path: "/explore", element: <Registration /> },
-  { path: "/login", element: <Login /> }, 
-  { path: "/signup", element: <Signup /> }, 
-  { path: "/profile", element: <ProfileCard/> }, 
-  { path: "/contact", element: <ContactUs />},
-  { path: "/dashboard", element: <ProfileDashboard /> }, 
-  {path:"/faqs", element: <Faqs />},
-  { path: "*", element: <Error404/> }, 
-  
+  { path: "/login", element: <GoogleLoginWrapper /> },
+  { path: "/signup", element: <GoogleSignUpWrapper /> },
+  { path: "/profile", element: <ProfileCard /> },
+  { path: "/contact", element: <ContactUs /> },
+  { path: "/dashboard", element: <ProfileDashboard /> },
+  { path: "/faqs", element: <Faqs /> },
+  { path: "*", element: <Error404 /> },
 ];
 
 function App() {
