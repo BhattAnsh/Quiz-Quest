@@ -96,7 +96,7 @@ export default function Footer() {
         {/* Right Section: Contact */}
         <div className="footer-contactus flex flex-col items-start">
           <h2 className="text-lg font-bold ml-2">Contact Us</h2>
-          <Link to="/contact" className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full mt-2 text-center">
+          <Link to="/contact-us" className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full mt-2 text-center">
             Get in Touch
           </Link>
         </div>
