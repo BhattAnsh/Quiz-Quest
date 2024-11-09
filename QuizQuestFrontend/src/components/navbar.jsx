@@ -71,7 +71,7 @@ export default function FloatingNav({ navItems, className }) {
           ))}
         </div>
         <div className="flex w-fit justify-between gap-8 pr-6">
-          <button className="relative text-sm bg-[#cff466] text-black w-fit px-10 py-2 rounded-full">
+          <button className="relative text-sm bg-[#cff466] text-black w-fit px-10 py-2 rounded-full" onClick={()=> navigate("/explore")}>
             <span>EXPLORE</span>
           </button>
           <button className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full" onClick={()=> navigate("/login")}>
