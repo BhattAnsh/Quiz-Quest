@@ -8,6 +8,9 @@ NODE_ENV = 'development'
 
 ```
 DB_URL = '(Put your mongodb uri or run locally!)'
+
+GOOGLE_CLIENT_ID =<your-google-client-id>
+GOOGLE_CLIENT_SECRET =<your-google-client-secret>
 ```
 
 ```
