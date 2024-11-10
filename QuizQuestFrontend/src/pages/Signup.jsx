@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 
+//for sign up with google
+import useGoogleOauth from "../api/useGoogleOauth";
+
 function Signup() {
 	const [formData, setFormData] = useState({
 		name: "",
@@ -26,27 +29,27 @@ function Signup() {
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (formData.password !== formData.cpassword) {
-            toast.error("Incorrect Password!");
-            return;
+		e.preventDefault();
+		if (formData.password !== formData.cpassword) {
+			toast.error("Incorrect Password!");
+			return;
 		}
-		
+
 		const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
 		// Password validation regex (at least 8 characters, one uppercase, one lowercase, one digit, one special character)
-		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-		
+		const passwordRegex =
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 		if (!formData.name || !formData.email || !formData.password) {
 			toast.error("Please fill in all fields");
 			return;
 		}
-		
+
 		if (!emailRegex.test(formData.email)) {
 			toast.error("Please enter valid email");
 			return;
 		}
-		
+
 		if (!passwordRegex.test(formData.password)) {
 			toast.error(
 				"Password having at least 8 characters, one uppercase, one lowercase, one digit, one special character"
@@ -54,10 +57,13 @@ function Signup() {
 			return;
 		}
 
-        toast.success("Signup successfully");
-        navigate("/");
+		toast.success("Signup successfully");
+		navigate("/");
 		console.log(formData);
 	};
+
+	//to handle oauths
+	const { googleLoginSignUp } = useGoogleOauth();
 
 	return (
 		<>
@@ -128,14 +134,16 @@ function Signup() {
 						</form>
 
 						<div className="border-solid w-[300px] h-[45px] text-l cursor-pointer flex justify-center text-center mt-[30px]">
-							<div className="text-center justify-center px-1 py-[4px] w-[250px] h-[45px] border-[1px] border-[#aad1a9] rounded-3xl gap-x-[10px] relative">
+							<button
+								className="text-center justify-center px-1 py-[4px] w-[250px] h-[45px] border-[1px] border-[#aad1a9] rounded-3xl gap-x-[10px] relative"
+								onClick={googleLoginSignUp}>
 								<img
 									className="h-[35px] rounded-[162px] w-[38px] object-cover"
 									src={googleImg}></img>
 								<span className="mt-[5px] w-[200px] absolute top-[3px] left-[30px]">
 									Continue with Google
 								</span>
-							</div>
+							</button>
 						</div>
 
 						<div className="flex justify-center items-center gap-4">
