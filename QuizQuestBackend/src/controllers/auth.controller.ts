@@ -10,6 +10,11 @@ import cloudinary from "cloudinary";
 import { sendToken } from "../config/jwt";
 
 import { redis } from "../config/redis";
+
+import axios from "axios";
+import { googleLogin } from "../middleware/googleAuth";
+
+
 require("dotenv").config();
 //register
 interface IRegistrationBody {
@@ -166,3 +171,31 @@ export const logoutUser = CatchAsyncError(
     }
   }
 );
+
+export const loginWithGoogle = async (req: Request, res: Response, next: NextFunction) => {
+      const code = req.query.code;
+    try {
+      const googleRes = await googleLogin.getToken(code as string);
+      googleLogin.setCredentials(googleRes.tokens);
+      const userRes = await axios.get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+      );
+      const { email, name } = userRes.data;
+
+      let user = await userModel.findOne({ email:email });
+
+      //dummy password
+      if (!user) {
+        let dummypassword = "dummy@123#DB";
+        user = await userModel.create({
+          username:name,
+          email:email,
+          password:dummypassword
+        });
+      }
+      sendToken(user, 200, res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+
