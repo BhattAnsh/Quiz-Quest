@@ -55,7 +55,7 @@ const navItems = [
   },
   {
     name: "CONTACT",
-    link: "/contact",
+    link: "/contact-us",
     icon: <IoMdSearch className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
 ];
@@ -81,13 +81,13 @@ const routeDefinitions = [
   { path: "/create", element: <CreateQuiz /> },
   { path: "/join", element: <div>Join Page</div> },
   { path: "/explore", element: <Registration /> },
-  { path: "/login", element: <GoogleLoginWrapper /> },
-  { path: "/signup", element: <GoogleSignUpWrapper /> },
-  { path: "/profile", element: <ProfileCard /> },
-  { path: "/contact", element: <ContactUs /> },
-  { path: "/dashboard", element: <ProfileDashboard /> },
-  { path: "/faqs", element: <Faqs /> },
-  { path: "*", element: <Error404 /> },
+  { path: "/login", element: <Login /> }, 
+  { path: "/signup", element: <Signup /> }, 
+  { path: "/profile", element: <ProfileCard/> }, 
+  { path: "/contact-us", element: <ContactUs />},
+  { path: "/dashboard", element: <ProfileDashboard /> }, 
+  {path:"/faqs", element: <Faqs />},
+  { path: "*", element: <Error404/> }, 
 ];
 
 function App() {
