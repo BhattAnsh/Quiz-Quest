@@ -52,7 +52,7 @@ export default function FloatingNav({ navItems, className }) {
         )}
       >
         <div className="w-72 h-full relative">
-          <div className="rounded-full absolute border-green-600 border-solid border-2 top-[50%] translate-y-[-50%] w-12 h-12">
+          <div className="rounded-full absolute border-green-600 border-solid border-2 top-[50%] translate-y-[-50%]  w-8 h-8 lg:w-12 lg:h-12">
             {" "}
             <div className="logo"></div>
           </div>
@@ -71,10 +71,13 @@ export default function FloatingNav({ navItems, className }) {
           ))}
         </div>
         <div className="flex w-fit justify-between gap-8 pr-6">
-          <button className="relative text-sm bg-[#cff466] text-black w-fit px-10 py-2 rounded-full" onClick={()=> navigate("/explore")}>
+ 
+       
+          <button className="relative text-sm bg-[#cff466] text-black w-fit px-10 py-2 rounded-full hidden lg:flex" onClick={()=> navigate("/explore")}>
+ 
             <span>EXPLORE</span>
           </button>
-          <button className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full" onClick={()=> navigate("/login")}>
+          <button className="relative text-sm bg-[#cff466] text-black min-w-fit px-10 py-2 rounded-full hidden lg:flex" onClick={()=> navigate("/login")}>
             <span>LOG IN</span>
           </button>
         </div>
