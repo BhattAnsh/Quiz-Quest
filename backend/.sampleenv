@@ -1,3 +1,3 @@
 PORT = 8000
-MONGO_URI = "enter mongo uri here"
+MONGO_URI="mongodb+srv://url here"
 JWT_SECRET = "enter jwt secret here"

@@ -7,6 +7,7 @@ interface IUser extends Document {
     password: string;
     previousQuizzes: string[];
     liveQuizzes: string[];
+    picture: string
 }
 
 const UserSchema = new Schema({
@@ -15,7 +16,8 @@ const UserSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     previousQuizzes: { type: [String], default: [] },
-    liveQuizzes: { type: [String], default: [] }
+    liveQuizzes: { type: [String], default: [] },
+    picture: {type: String, default:""}
 });
 
 export default mongoose.model<IUser>('User', UserSchema);

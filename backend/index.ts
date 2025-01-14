@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
 import authRoutes from "./routes/auth";
-
+import profileroutes from "./routes/profile"
 // Load environment variables
 dotenv.config();
 
@@ -25,6 +25,9 @@ app.get("/", (req: Request, res: Response) => {
 // Login/signup API
 app.use("/auth", authRoutes);
 
+
+//profile route
+app.use("/profile",profileroutes)
 // Start the Server
 const PORT = process.env.PORT || 5000; // Default port is 5000
 app.listen(PORT, () => {
