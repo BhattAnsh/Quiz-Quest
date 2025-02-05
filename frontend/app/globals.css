@@ -19,3 +19,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+label, .mt-4, .text-2xl {
+  color: #0a0a0a;
+}
