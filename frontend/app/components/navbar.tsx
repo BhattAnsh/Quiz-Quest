@@ -14,7 +14,6 @@ export default function Navbar() {
             <Link href="/auth/login" className="text-gray-800 hover:text-blue-500">
                 Login
             </Link>
-            
             <Link href="/auth/signup" className="text-gray-800 hover:text-blue-500">
                 Sign Up
             </Link>

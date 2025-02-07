@@ -21,15 +21,6 @@ body {
   min-height: 100vh;
 }
 
-label, .text-2xl {
-  color: #6efa75;
-}
-
-.bg-gray-100 {
-  background: radial-gradient(circle at center, #1e2d1e, #121212);
-  box-shadow: 0px 4px 30px rgba(0, 255, 128, 0.2);
-}
-
 .min-h-screen {
   min-height: 100vh;
 }
@@ -47,31 +38,12 @@ label, .text-2xl {
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
-.font-bold {
-  font-weight: 600;
-}
-
 .text-center {
   text-align: center;
 }
 
 .w-full {
   width: 100%;
-}
-
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
 .border {
@@ -84,7 +56,12 @@ label, .text-2xl {
 }
 
 .bg-blue-500 {
+  display: flex;
   background-color: #63bb6a;
+  width: auto;
+  padding: 10px 20px;
+  justify-self: center;
+  font-size: 18;
 }
 
 .bg-blue-500:hover {
@@ -115,7 +92,8 @@ label, .text-2xl {
   color: #6efa75;
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.3); 
-  width: 100%;
+  width: auto;
+  justify-self: center;
   font-size: 16px;
   outline: none;
   transition: all 0.3s ease-in-out;
@@ -152,19 +130,6 @@ label, .text-2xl {
   color: #ef4444;
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-  color: #ffffff;
-}
-
 .p-8 {
   padding: 2rem;
 }
@@ -180,10 +145,6 @@ input:focus {
 }
 
 label {
-  color: #6efa75;
-}
-
-.text-red-500 {
   color: #6efa75;
 }
 
@@ -209,7 +170,6 @@ input {
   justify-content: space-between;
   align-items: center;
   padding: 2rem; 
-  max-width: 900px; 
   margin: 0 auto; 
   border-radius: 2rem; 
 }
@@ -218,7 +178,7 @@ input {
   border-radius: 50px;
 }
 
-@media (max-width: 594px) {
+@media (max-width: 534px) {
   .container {
     flex-direction: column;
     align-items: center;
@@ -240,4 +200,53 @@ input {
     background-position: center, top left, bottom right;
     background-size: cover, 400px, 400px;
   }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --border: 240 5.9% 90%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+  }
+}
+
+@layer utilities {
+  .bg-pattern {
+    @apply bg-neutral-100 dark:bg-neutral-900;
+    background-image: 
+      radial-gradient(at 4% 8%, hsla(120,60%,90%,0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 90%, hsla(120,60%,90%,0.1) 0px, transparent 50%);
+  }
+
+  .bg-glass {
+    @apply bg-white/50 dark:bg-neutral-800/50;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+body {
+  @apply bg-background text-foreground font-sans;
+}
+
+input, button {
+  @apply transition-all duration-200 ease-out;
 }
