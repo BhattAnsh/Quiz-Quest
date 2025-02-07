@@ -30,6 +30,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
+
             <Image
               className="dark:invert"
               src="/vercel.svg"

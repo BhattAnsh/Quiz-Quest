@@ -16,6 +16,237 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: #121212;
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.border {
+  border-width: 1px;
+  border-color: #e2e8f0;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.bg-blue-500 {
+  display: flex;
+  background-color: #63bb6a;
+  width: auto;
+  padding: 10px 20px;
+  justify-self: center;
+  font-size: 18;
+}
+
+.bg-blue-500:hover {
+  background-color: #4f9655;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-blue-500 {
+  color: #6efa75;
+}
+
+.text-blue-500:hover {
+  text-decoration: underline;
+  color: #057420;
+}
+
+.continue-with-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  border-radius: 4rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: #6efa75;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3); 
+  width: auto;
+  justify-self: center;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.continue-with-google:hover {
+  background-color: #f8fafc;
+  color: #057420;
+}
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  margin: 1.5rem 0;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.or-divider::before {
+  margin-right: 1rem;
+}
+
+.or-divider::after {
+  margin-left: 1rem;
+}
+
+.text-red-500 {
+  color: #ef4444;
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+button {
+  transition: all 0.15s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6efa75;
+  box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.1);
+}
+
+label {
+  color: #6efa75;
+}
+
+form, form * {
+  color: #6efa75;
+}
+
+input {
+  color: black;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3); 
+  padding: 12px;
+  width: 100%;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem; 
+  margin: 0 auto; 
+  border-radius: 2rem; 
+}
+
+.google {
+  border-radius: 50px;
+}
+
+@media (max-width: 534px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .right-image {
+    display: none;         
+    margin: 20px auto 0 auto;
+  }
+
+  .bg-gray-100 {
+    background-color: #000; 
+    background-image: 
+      radial-gradient(circle at center, #2d2d2d 0%, #000 100%),
+      linear-gradient(135deg, #507d2a 0%, #507d2a 70%, transparent 70%),
+      linear-gradient(315deg, #507d2a 0%, #507d2a 70%, transparent 70%);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: center, top left, bottom right;
+    background-size: cover, 400px, 400px;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --border: 240 5.9% 90%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+  }
+}
+
+@layer utilities {
+  .bg-pattern {
+    @apply bg-neutral-100 dark:bg-neutral-900;
+    background-image: 
+      radial-gradient(at 4% 8%, hsla(120,60%,90%,0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 90%, hsla(120,60%,90%,0.1) 0px, transparent 50%);
+  }
+
+  .bg-glass {
+    @apply bg-white/50 dark:bg-neutral-800/50;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+body {
+  @apply bg-background text-foreground font-sans;
+}
+
+input, button {
+  @apply transition-all duration-200 ease-out;
 }
